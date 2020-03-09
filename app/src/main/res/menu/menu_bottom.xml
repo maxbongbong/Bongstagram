@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- 홈 아이콘 -->
+    <!-- 클릭 전 홈 아이콘 -->
     <item
         android:id="@+id/miHome"
-        android:icon="@drawable/outline_home_24"
+        android:icon="@drawable/change_home"
+        android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="@string/title_home">
     </item>
-    <!-- 돋보기 아이콘 -->
+    <!-- 클릭 전 돋보기 아이콘 -->
     <item
         android:id="@+id/miSearch"
-        android:icon="@drawable/baseline_search_24"
+        android:icon="@drawable/change_search"
+        android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="@string/title_search">
     </item>
-    <!-- 갤러리 아이콘 -->
+    <!-- 클릭 전 갤러리 아이콘 -->
     <item
         android:id="@+id/miGallery"
-        android:icon="@drawable/baseline_add_circle_outline_black_18"
+        android:icon="@drawable/change_gallery"
+        android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="@string/title_gallery">
     </item>
-    <!-- 활동 아이콘 -->
+    <!-- 클릭 전 활동 아이콘 -->
     <item
         android:id="@+id/miActivity"
-        android:icon="@drawable/baseline_favorite_border_24"
+        android:icon="@drawable/change_activity"
+        android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="@string/title_activity">
     </item>
-    <!-- 프로필 아이콘 -->
+    <!-- 클릭 전 프로필 아이콘 -->
     <item
         android:id="@+id/miProfile"
-        android:icon="@drawable/baseline_account_box_24"
+        android:icon="@drawable/change_profile"
+        android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="@string/title_profile">
     </item>

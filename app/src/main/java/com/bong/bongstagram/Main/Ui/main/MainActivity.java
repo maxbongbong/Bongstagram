@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.bong.bongstagram.Main.Ui.Activity.ActivityFragment;
 import com.bong.bongstagram.Main.Ui.Gallery.GalleryFragment;
@@ -24,52 +25,51 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private HomeFragment fragmenthome = new HomeFragment();
-    private SearchFragment fragmentsearch = new SearchFragment();
-    private GalleryFragment fragmentgallery = new GalleryFragment();
-    private ActivityFragment fragmentActivity = new ActivityFragment();
-    private ProfileFragment fragmentprofile = new ProfileFragment();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Fragment splashFragment;
-        splashFragment = new SplashFragment();
-//        Toolbar(0);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+        Fragment splashFragment = new SplashFragment();
         changeFragment(Type.splash, splashFragment);
+        Toolbar(Type.splash);
+        bottomNavi(Type.splash);
         Log.e("view", "view = Mainactivity화면");
     }
 
-    public void Toolbar(int num){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.navigationView);
-        toolbar.setNavigationIcon(R.drawable.outline_home_24);
-        toolbar.setNavigationIcon(R.drawable.baseline_search_24);
-        toolbar.setNavigationIcon(R.drawable.baseline_add_circle_outline_black_18);
-        toolbar.setNavigationIcon(R.drawable.baseline_favorite_border_24);
-        toolbar.setNavigationIcon(R.drawable.baseline_account_box_24);
+    public void bottomNavi(Type t){
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+        if (t.ordinal() == 0) {
+            bottomNavigationView.setVisibility(View.INVISIBLE);
+        }else{
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+        }
+    }
+
+    public void Toolbar(Type type){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        switch (num){
-            case 0:
+        switch (type){
+            case splash:
                 getSupportActionBar().hide();
                 break;
-            case 1:
+            case home:
                 getSupportActionBar().show();
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.outline_camera_alt_24);
                 getSupportActionBar().setTitle(R.string.title_home);
                 break;
-            case 2:
+            case serarch:
                 getSupportActionBar().setTitle(R.string.title_search);
                 break;
-            case 3:
+            case gallery:
                 getSupportActionBar().setTitle(R.string.title_gallery);
                 break;
-            case 4:
+            case activity:
                 getSupportActionBar().setTitle(R.string.title_activity);
                 break;
-            case 5:
+            case profile:
                 getSupportActionBar().setTitle(R.string.title_profile);
                 break;
         }
@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_right_left, R.anim.fragment_close_exit);
         if (type.ordinal() <= 1) {
-            transaction.replace(R.id.contentFrame, fragment);
+            transaction.replace(R.id.contentFrame, fragment).commit();
         } else if (type.ordinal() > 1) {
             transaction.addToBackStack(null);
-            transaction.replace(R.id.contentFrame, fragment);
+            transaction.replace(R.id.contentFrame, fragment).commit();
         }
     }
 
@@ -99,19 +99,29 @@ public class MainActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()){
                 case R.id.miHome:
-                    transaction.replace(R.id.contentFrame, fragmenthome).commitAllowingStateLoss();
+                    HomeFragment fragmenthome = new HomeFragment();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragmenthome).commit();
                     break;
                 case R.id.miSearch:
-                    transaction.replace(R.id.contentFrame, fragmentsearch).commitAllowingStateLoss();
+                    SearchFragment fragmentsearch = new SearchFragment();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragmentsearch).commit();
                     break;
                 case R.id.miGallery:
-                    transaction.replace(R.id.contentFrame, fragmentgallery).commitAllowingStateLoss();
+                    GalleryFragment fragmentgallery = new GalleryFragment();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragmentgallery).commit();
                     break;
                 case R.id.miActivity:
-                    transaction.replace(R.id.contentFrame, fragmentActivity).commitAllowingStateLoss();
+                    ActivityFragment fragmentActivity = new ActivityFragment();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragmentActivity).commit();
                     break;
                 case R.id.miProfile:
-                    transaction.replace(R.id.contentFrame, fragmentprofile).commitAllowingStateLoss();
+                    ProfileFragment fragmentprofile = new ProfileFragment();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.contentFrame, fragmentprofile).commit();
                     break;
             }
             return true;

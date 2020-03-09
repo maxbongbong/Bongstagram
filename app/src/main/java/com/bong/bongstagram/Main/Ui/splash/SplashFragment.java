@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.bong.bongstagram.Main.Ui.Home.HomeFragment;
 import com.bong.bongstagram.Main.Ui.main.MainActivity;
 import com.bong.bongstagram.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SplashFragment extends Fragment {
     @Override
@@ -26,24 +27,24 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_splash, container, false);
-        Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 5000);
-        Log.e("view", "view = splash화면");
-
+        ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.splash);
+        ((MainActivity)getActivity()).Toolbar(MainActivity.Type.splash);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Fragment homeFragment = new HomeFragment();
-        ((MainActivity)getActivity()).changeFragment(MainActivity.Type.home, homeFragment);
+        Handler hd = new Handler();
+        hd.postDelayed(new splashhandler(), 2000);
+        Log.e("view", "view = splash화면");
     }
 
     private class splashhandler implements Runnable{
         @Override
         public void run() {
-            startActivity(new Intent(getActivity(), HomeFragment.class));
+            Fragment homeFragment = new HomeFragment();
+            ((MainActivity)getActivity()).changeFragment(MainActivity.Type.home, homeFragment);
         }
     }
 }
