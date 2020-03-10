@@ -16,7 +16,7 @@ public class GalleryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View view = (View)inflater.inflate(R.layout.fragment_gallery, container, false);
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.gallery);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.gallery);
         return view;

@@ -16,7 +16,8 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_home, container, false);
+
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.home);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.home);
         return view;

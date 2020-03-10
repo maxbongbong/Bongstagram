@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.title_home);
                 break;
             case serarch:
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.outline_search_24);
                 getSupportActionBar().setTitle(R.string.title_search);
                 break;
             case gallery:

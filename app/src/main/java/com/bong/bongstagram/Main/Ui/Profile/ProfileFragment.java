@@ -16,7 +16,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = (View)inflater.inflate(R.layout.fragment_profile, container, false);
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.profile);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.profile);
         return view;

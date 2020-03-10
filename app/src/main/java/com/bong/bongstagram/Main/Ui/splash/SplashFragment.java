@@ -26,7 +26,7 @@ public class SplashFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_splash, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_splash, container, false);
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.splash);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.splash);
         return view;
