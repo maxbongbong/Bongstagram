@@ -19,7 +19,6 @@ import com.bong.bongstagram.Main.Ui.Profile.ProfileFragment;
 import com.bong.bongstagram.Main.Ui.Search.SearchFragment;
 import com.bong.bongstagram.Main.Ui.splash.SplashFragment;
 import com.bong.bongstagram.R;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
