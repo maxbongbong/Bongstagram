@@ -20,10 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/image_profile"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintStart_toEndOf="@+id/image_profile"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/username"
@@ -32,19 +32,19 @@
             android:maxLines="1"
             android:text="username"
             android:textColor="@color/overlay_dark_80"
+            android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/fullname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:maxLines="1"
             android:text="Full Name"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/username" />
     </LinearLayout>
 
     <Button
