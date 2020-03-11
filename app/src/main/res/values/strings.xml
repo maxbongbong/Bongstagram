@@ -12,4 +12,7 @@
 
     <!-- Icon -->
     <string name="icon_camera">Camera</string>
+    <string name="icon_air">Air</string>
+    <string name="icon_comment">Comment</string>
+    <string name="icon_">sdf</string>
 </resources>
