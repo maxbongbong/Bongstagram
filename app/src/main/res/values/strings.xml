@@ -15,4 +15,7 @@
     <string name="icon_air">Air</string>
     <string name="icon_comment">Comment</string>
     <string name="icon_">sdf</string>
+
+    <!-- Facebook-->
+    <string name="facebook_app_id">2442465452730583</string>
 </resources>

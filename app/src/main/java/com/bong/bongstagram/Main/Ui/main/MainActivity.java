@@ -21,7 +21,6 @@ import com.bong.bongstagram.Main.Ui.splash.SplashFragment;
 import com.bong.bongstagram.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

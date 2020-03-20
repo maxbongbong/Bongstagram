@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bong.bongstagram.Main.Adapter.UserAdapter;
 import com.bong.bongstagram.Main.Model.User;
 import com.bong.bongstagram.Main.Ui.main.MainActivity;
 import com.bong.bongstagram.R;
@@ -25,7 +24,6 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
     private List<User> userList;
     private EditText search_bar;
 
@@ -42,8 +40,8 @@ public class SearchFragment extends Fragment {
         search_bar = view.findViewById(R.id.search_bar);
 
         userList = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), userList, true);
-        recyclerView.setAdapter(userAdapter);
+//        userAdapter = new UserAdapter(getContext(), userList, true);
+//        recyclerView.setAdapter(userAdapter);
 
 //        readUsers();
 
