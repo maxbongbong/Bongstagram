@@ -1,18 +1,22 @@
-package com.bong.bongstagram.Main.Ui.Home;
-
-import android.graphics.drawable.Drawable;
+package com.bong.bongstagram.Main.Model;
 
 public class MovieList {
-    private int imagedrw;
+    private String url;
     private String title;
     private String desc;
 
-    public int getImagedrw() {
-        return imagedrw;
+    public MovieList(String url, String title, String desc){
+        this.url = url;
+        this.title = title;
+        this.desc = desc;
     }
 
-    public void setImagedrw(int imagedrw) {
-        this.imagedrw = imagedrw;
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getTitle() {

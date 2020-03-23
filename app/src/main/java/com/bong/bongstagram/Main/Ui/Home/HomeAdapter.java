@@ -10,13 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bong.bongstagram.Main.Model.MovieList;
 import com.bong.bongstagram.R;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     Context context;
-    private ArrayList<MovieList> movieLists = null;
+    private ArrayList<MovieList> movieLists;
     private LayoutInflater mInflate;
 
     public HomeAdapter(Context context, ArrayList<MovieList> movieList){
@@ -30,7 +32,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     public HomeAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = mInflate.inflate(R.layout.fragment_home, parent, false);
-        HomeAdapter.Holder holder = new HomeAdapter.Holder(view);
+        Holder holder = new Holder(view);
 
         return holder;
     }
@@ -39,7 +41,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     public void onBindViewHolder(@NonNull HomeAdapter.Holder holder, int position) {
 
         MovieList item = movieLists.get(position);
-        holder.imageView.setImageResource(item.getImagedrw());
+
+        Glide.with(holder.itemView.getContext())
+                .load(item.getUrl())
+                .into(holder.imageView);
         holder.textView1.setText(item.getTitle());
         holder.textView2.setText(item.getDesc());
     }
@@ -51,8 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
 
     public class Holder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView textView1;
-        TextView textView2;
+        TextView textView1, textView2;
 
         public Holder(@NonNull View itemView){
             super(itemView);

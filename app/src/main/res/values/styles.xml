@@ -76,13 +76,11 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-
     <style name="Dialog.Theme" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
 
     <style name="push_up_down">
         <item name="android:windowEnterAnimation">@anim/push_up_in</item>
@@ -93,6 +91,4 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/push_up_down</item>
     </style>
-
-
 </resources>

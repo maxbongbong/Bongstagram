@@ -9,7 +9,7 @@ public interface Apiservice {
     static final String API_URL = "https://api.instagram.com/oauth/";
     @FormUrlEncoded
     @POST("access_token")
-    Call<Post> postAccessToken(
+    Call<Movie> postAccessToken(
             @Field("client_id") String client_id,
             @Field("client_secret") String client_secret,
             @Field("grant_type") String grant_type,
