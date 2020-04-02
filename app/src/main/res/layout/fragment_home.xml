@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:layout_marginTop="9dp"
+    android:layout_marginTop="10dp"
+    android:theme="@style/FullThema_Release"
+    android:layout_marginBottom="5dp"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -18,10 +20,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
+        android:paddingLeft="9dp"
         app:layout_constraintStart_toEndOf="@+id/image_profile"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,7 +35,7 @@
             android:maxLines="1"
             android:text="username"
             android:textColor="@color/overlay_dark_80"
-            android:textSize="14dp"
+            android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,10 +43,10 @@
             android:id="@+id/fullname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:maxLines="1"
-            android:textSize="11dp"
             android:text="Full Name"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username" />
     </LinearLayout>
@@ -52,7 +55,7 @@
         android:id="@+id/frame_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/overlay_light_90"
+        android:backgroundTint="#00ff0000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_frame">
@@ -60,19 +63,19 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/overlay_light_90"
+            android:backgroundTint="#00ff0000"
             android:src="@drawable/change_activity" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/overlay_light_90"
+            android:backgroundTint="#00ff0000"
             android:src="@drawable/outline_mode_comment_24" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/overlay_light_90"
+            android:backgroundTint="#00ff0000"
             android:src="@drawable/outline_near_me_24" />
 
         <View
@@ -83,18 +86,19 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/overlay_light_90"
+            android:backgroundTint="#00ff0000"
             android:src="@drawable/baseline_bookmark_border_24" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_activity"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        >
 
         <TextView
             android:id="@id/username"
@@ -111,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_weight="3"
+            android:maxLines="3"
             android:enabled="true"
             android:text="오늘은 3월 11일 오후 7시 52분 홈화면 구성 테스트"
             tools:ignore="MissingConstraints"
@@ -132,12 +137,12 @@
         android:id="@+id/image_frame"
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:adjustViewBounds="true"
         android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/image_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="36dp"
         tools:srcCompat="@tools:sample/avatars" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

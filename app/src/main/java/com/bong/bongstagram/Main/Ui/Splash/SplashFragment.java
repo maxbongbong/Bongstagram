@@ -1,9 +1,7 @@
-package com.bong.bongstagram.Main.Ui.splash;
+package com.bong.bongstagram.Main.Ui.Splash;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bong.bongstagram.Main.Ui.Home.HomeFragment;
-import com.bong.bongstagram.Main.Ui.main.MainActivity;
+import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SplashFragment extends Fragment {
     @Override
@@ -26,7 +23,7 @@ public class SplashFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.fragment_splash, container, false);
+        View view = inflater.inflate(R.layout.fragment_splash, container, false);
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.splash);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.splash);
         return view;
@@ -36,8 +33,7 @@ public class SplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 2000);
-        Log.e("view", "view = splash화면");
+        hd.postDelayed(new splashhandler(), 1000);
     }
 
     private class splashhandler implements Runnable{

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bong.bongstagram.Main.Data.Movie;
-import com.bong.bongstagram.Main.Ui.main.MainActivity;
+import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 
 public class HomeFragment extends Fragment {
@@ -27,10 +27,11 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.item_list, container, false);
+        View view = inflater.inflate(R.layout.recyclerview, container, false);
         Context context = view.getContext();
         ((MainActivity) getActivity()).bottomNavi(MainActivity.Type.home);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.home);
+        setHasOptionsMenu(true);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -52,8 +53,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
-
     }
 }

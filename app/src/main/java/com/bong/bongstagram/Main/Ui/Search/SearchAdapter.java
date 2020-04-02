@@ -1,7 +1,6 @@
 package com.bong.bongstagram.Main.Ui.Search;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import com.bong.bongstagram.Main.Model.MovieList;
 import com.bong.bongstagram.R;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> implements Filterable {
     Context context;
@@ -36,7 +33,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> im
     @Override
     public SearchAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mInflate = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = mInflate.inflate(R.layout.movie_search, parent, false);
+        View view = mInflate.inflate(R.layout.fragment_search, parent, false);
         Holder holder = new Holder(view);
 
         return holder;

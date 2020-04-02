@@ -77,7 +77,7 @@ dependencies {
      *UI
      */
     implementation "com.google.android.material:material:$materialVersion"
-
+    implementation 'gun0912.ted:tedpermission:2.0.0'
     /**
      *Testing
      */
