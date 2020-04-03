@@ -35,7 +35,6 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -141,7 +140,6 @@ public class GalleryFragment extends Fragment {
     private void sendPicture(Uri imgUri){
         String imagePath = getRealPathFromURI(imgUri);
         ExifInterface exif = null;
-        ImageView imageView = getView().findViewById(R.id.iv_result);
         try {
             exif = new ExifInterface(imagePath);
         } catch (IOException e) {
@@ -151,7 +149,6 @@ public class GalleryFragment extends Fragment {
         int exifDegree = exifOrientationToDegrees(exifOrientation);
         Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());//경로를 통해 비트맵으로 전환
         ((ImageView)getView().findViewById(R.id.iv_result)).setImageBitmap(rotate(bitmap, exifDegree));
-        imageView.setImageBitmap(bitmap);
 
         tempFile = null;
     }
@@ -202,8 +199,6 @@ public class GalleryFragment extends Fragment {
 
     private void goToAlbum(){
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
