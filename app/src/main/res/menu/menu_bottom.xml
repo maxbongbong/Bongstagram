@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- 클릭 전 홈 아이콘 -->
+    <!-- 홈 아이콘 -->
     <item
         android:id="@+id/miHome"
         android:icon="@drawable/change_home"
@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom"
         android:title="@string/title_home">
     </item>
-    <!-- 클릭 전 돋보기 아이콘 -->
+    <!-- 돋보기 아이콘 -->
     <item
         android:id="@+id/miSearch"
         android:icon="@drawable/change_search"
@@ -17,7 +17,7 @@
         app:showAsAction="ifRoom"
         android:title="@string/title_search">
     </item>
-    <!-- 클릭 전 갤러리 아이콘 -->
+    <!-- 갤러리 아이콘 -->
     <item
         android:id="@+id/miGallery"
         android:icon="@drawable/change_gallery"
@@ -25,7 +25,7 @@
         app:showAsAction="ifRoom"
         android:title="@string/title_gallery">
     </item>
-    <!-- 클릭 전 활동 아이콘 -->
+    <!-- 활동 아이콘 -->
     <item
         android:id="@+id/miActivity"
         android:icon="@drawable/change_activity"
@@ -33,7 +33,7 @@
         app:showAsAction="ifRoom"
         android:title="@string/title_activity">
     </item>
-    <!-- 클릭 전 프로필 아이콘 -->
+    <!-- 프로필 아이콘 -->
     <item
         android:id="@+id/miProfile"
         android:icon="@drawable/change_profile"

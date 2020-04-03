@@ -8,8 +8,7 @@
     <item
         android:state_selected="true"
         android:drawable="@drawable/baseline_favorite_24"
-        >
-    </item>
+       />
     <!-- 클릭 전 활동 아이콘 -->
     <item
         android:state_pressed = "false"
