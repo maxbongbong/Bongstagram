@@ -35,6 +35,7 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -140,16 +141,17 @@ public class GalleryFragment extends Fragment {
     private void sendPicture(Uri imgUri){
         String imagePath = getRealPathFromURI(imgUri);
         ExifInterface exif = null;
-        try {
+        try{
             exif = new ExifInterface(imagePath);
-        } catch (IOException e) {
+            InputStream in = getContext().getContentResolver().openInputStream(imgUri);
+            Bitmap img = BitmapFactory.decodeStream(in);
+            int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int exifDegree = exifOrientationToDegrees(exifOrientation);
+            in.close();
+            ((ImageView)getView().findViewById(R.id.iv_result)).setImageBitmap(rotate(img, exifDegree));
+        }catch (Exception e){
             e.printStackTrace();
         }
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-        Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());//경로를 통해 비트맵으로 전환
-        ((ImageView)getView().findViewById(R.id.iv_result)).setImageBitmap(rotate(bitmap, exifDegree));
-
         tempFile = null;
     }
 
