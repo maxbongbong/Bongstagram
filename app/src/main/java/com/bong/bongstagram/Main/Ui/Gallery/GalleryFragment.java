@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.bong.bongstagram.Main.Ui.Local.LocalFragment;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 import com.gun0912.tedpermission.PermissionListener;
@@ -53,7 +55,6 @@ public class GalleryFragment extends Fragment {
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION
     };
 
     public boolean hasPermission(Context context, String... permissions){
@@ -77,7 +78,7 @@ public class GalleryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         LinearLayout linearLayout = view.findViewById(R.id.linear_gallery);
-        if (hasPermission(getContext(), PERMISSIONS) == true) {
+        if (hasPermission(getContext(), PERMISSIONS) == true && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             linearLayout.setVisibility(View.GONE);
         } else {
             linearLayout.setVisibility(View.VISIBLE);
@@ -99,7 +100,7 @@ public class GalleryFragment extends Fragment {
 
                 TedPermission.with(getContext())
                         .setPermissionListener(p)
-                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
                         .check();
             });
         }
@@ -132,10 +133,13 @@ public class GalleryFragment extends Fragment {
                 break;
             case PICK_FORM_CAMERA:
                 getPictureForPhoto();
+                Fragment localfragment = new LocalFragment();
+                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localfragment);
                 break;
             default:
                 break;
         }
+
     }
 
     private void sendPicture(Uri imgUri){
@@ -223,7 +227,7 @@ public class GalleryFragment extends Fragment {
                  *
                  *  참고 자료 http://programmar.tistory.com/4 , http://programmar.tistory.com/5
                  */
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     photoUri = FileProvider.getUriForFile(getContext(), "com.bong.bongstagram.fileprovider", tempFile);
                     takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                     startActivityForResult(takePicture, PICK_FORM_CAMERA);
@@ -315,7 +319,7 @@ public class GalleryFragment extends Fragment {
                 .setPermissionListener(permissionListener)
                 .setRationaleMessage(getResources().getString(R.string.permission_2))
                 .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .check();
     }
 }

@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
             case local:
                 hideBar(Type.local);
                 break;
+            case google:
+                hideBar(Type.google);
+                break;
         }
     }
 
@@ -114,7 +117,10 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.title_profile);
                 break;
             case local:
-                getSupportActionBar().setTitle("새 게시물");
+                getSupportActionBar().setTitle(R.string.title_local);
+                break;
+            case google:
+                getSupportActionBar().setTitle(R.string.title_google);
                 break;
         }
     }
@@ -130,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public enum Type{
-        splash, home, search, gallery, activity, profile, local
+        splash, home, search, gallery, activity, profile, local, google
     }
 
     public void changeFragment(Type type, Fragment fragment){
