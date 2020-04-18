@@ -5,8 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="false">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -17,67 +16,78 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/Toolbar.Light"
-            app:contentInsetStart="0dp"
-            app:titleTextColor="@color/toolbar_title"
-            >
+            app:titleTextColor="@color/toolbar_title">
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/main_frame"
-                >
+                android:id="@+id/main_frame">
                 <ImageView
                     android:id="@+id/logo_image"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/textlogo"/>
+                    android:src="@drawable/text_logo"
+                    android:contentDescription="TODO" />
                 <LinearLayout
                     android:id="@+id/search_group"
-                    android:layout_gravity="left"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="350dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left">
                     <ImageView
-                        android:id="@+id/search_iamge"
+                        android:id="@+id/search_image"
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/baseline_search_24"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="TODO"
+                        android:src="@drawable/baseline_search_24" />
+
                     <EditText
                         android:id="@+id/main_search_bar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Search..."
-                    />
+                        android:hint="Search..." />
+
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/overlay_dark_80"
+                    android:textSize="20dp"
+                    android:text="address"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
             </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        >
-        <FrameLayout
+        android:orientation="vertical">
+
+        <LinearLayout
             android:id="@+id/contentFrame"
             android:layout_width="match_parent"
-            android:layout_height="720dp"
+            android:layout_height="match_parent"
             android:scrollbars="none"
             android:scrollingCache="true"
             android:text="@string/contentFrame"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toTopOf="@+id/navigationView" />
+            tools:layout_editor_absoluteX="0dp"
+            android:orientation="vertical" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:itemIconTint="@color/overlay_dark_80"
-            app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/menu_bottom" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemIconTint="@color/overlay_dark_80"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_anchor="@+id/linearLayout7"
+        app:layout_anchorGravity="bottom|center"
+        app:menu="@menu/menu_bottom" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

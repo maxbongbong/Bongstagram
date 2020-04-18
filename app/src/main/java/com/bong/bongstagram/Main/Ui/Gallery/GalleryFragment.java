@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,14 +134,44 @@ public class GalleryFragment extends Fragment {
                 break;
             case PICK_FORM_CAMERA:
                 getPictureForPhoto();
-                Fragment localfragment = new LocalFragment();
-                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localfragment);
+                Fragment localFragment = new LocalFragment();
+                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
                 break;
             default:
                 break;
         }
 
     }
+
+//    private ArrayList<String> getPathOfAllImages(){
+//        ArrayList<String> result = new ArrayList<>();
+//        Uri uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//        String[] projection = { MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME };
+//
+//        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, MediaStore.MediaColumns.DATE_ADDED + " desc");
+//        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+//        int columnDisplayname = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME);
+//
+//        int lastIndex;
+//        while (cursor.moveToNext())
+//        {
+//            String absolutePathOfImage = cursor.getString(columnIndex);
+//            String nameOfFile = cursor.getString(columnDisplayname);
+//            lastIndex = absolutePathOfImage.lastIndexOf(nameOfFile);
+//            lastIndex = lastIndex >= 0 ? lastIndex : nameOfFile.length() - 1;
+//
+//            if (!TextUtils.isEmpty(absolutePathOfImage))
+//            {
+//                result.add(absolutePathOfImage);
+//            }
+//        }
+//
+//        for (String string : result)
+//        {
+//            Log.i("asd", "|" + string + "|");
+//        }
+//        return result;
+//    }
 
     private void sendPicture(Uri imgUri){
         String imagePath = getRealPathFromURI(imgUri);

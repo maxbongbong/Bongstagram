@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/mihead"
+        android:id="@+id/miHead"
         android:icon="@drawable/baseline_view_headline_24"
         app:showAsAction="ifRoom"
         android:title="@string/icon_head"

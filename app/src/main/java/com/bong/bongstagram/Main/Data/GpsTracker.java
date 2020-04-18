@@ -1,4 +1,4 @@
-package com.bong.bongstagram.Main.Ui.Local;
+package com.bong.bongstagram.Main.Data;
 
 import android.Manifest;
 import android.app.Service;
@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 public class GpsTracker extends Service implements LocationListener {
-    private final Context mContext;
+    private Context mContext;
     Location location;
     double latitude;
     double longitude;

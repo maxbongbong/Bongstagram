@@ -1,6 +1,7 @@
 package com.bong.bongstagram.Main.Ui.Local;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,10 +26,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bong.bongstagram.Main.Data.GpsTracker;
 import com.bong.bongstagram.Main.Ui.GoogleMap.GoogleMapFragment;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
-import com.google.android.gms.maps.MapView;
 
 import java.io.IOException;
 import java.util.List;
@@ -122,9 +123,11 @@ public class LocalFragment extends Fragment {
         return address.getAddressLine(0) + "\n";
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         final TextView textAddress = getView().findViewById(R.id.local_textview);
 
         Button ShowLocationBtn = getView().findViewById(R.id.local_btn);

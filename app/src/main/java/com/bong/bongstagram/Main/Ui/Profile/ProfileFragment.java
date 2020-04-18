@@ -18,7 +18,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = (View)inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.profile);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.profile);
         setHasOptionsMenu(true);
@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_profile, menu);
+        inflater.inflate(R.menu.menu_content, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

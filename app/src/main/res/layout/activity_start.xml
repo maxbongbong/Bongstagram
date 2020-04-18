@@ -24,7 +24,7 @@
             android:layout_height="84dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="login"
-            android:src="@drawable/textlogo"
+            android:src="@drawable/text_logo"
             android:transitionName="icon"
             app:layout_constraintBottom_toTopOf="@+id/Loginbutton"
             app:layout_constraintEnd_toEndOf="parent"
