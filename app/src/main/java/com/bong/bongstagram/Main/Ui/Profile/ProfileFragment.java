@@ -22,6 +22,7 @@ public class ProfileFragment extends Fragment {
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.profile);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.profile);
         setHasOptionsMenu(true);
+
         return view;
     }
 

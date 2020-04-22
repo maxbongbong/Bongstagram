@@ -9,7 +9,7 @@
             <solid android:color="@color/card_bg"/>
             <stroke
                 android:color="@color/overlay_dark_80"
-                android:width="3dp"/>
+                android:width="2dp"/>
         </shape>
     </item>
 </layer-list>

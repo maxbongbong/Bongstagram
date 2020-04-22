@@ -35,10 +35,11 @@ public class EventDialogFragment extends androidx.fragment.app.DialogFragment im
     private double latitude;
     private double longitude;
     private String address;
+    private TextView open;
+    private Button close;
 
     public static EventDialogFragment getInstance(){
-        EventDialogFragment d = new EventDialogFragment();
-        return d;
+        return new EventDialogFragment();
     }
 
     @Nullable
@@ -50,10 +51,6 @@ public class EventDialogFragment extends androidx.fragment.app.DialogFragment im
         dialog.setCanceledOnTouchOutside(false);
 
         View view = inflater.inflate(R.layout.fragment_dialog, container, false);
-        TextView open = view.findViewById(R.id.open);
-        Button close = view.findViewById(R.id.close);
-        open.setOnClickListener(this);
-        close.setOnClickListener(this);
 
         Bundle bundle = getArguments();
         latitude = bundle.getDouble("latitude");
@@ -66,6 +63,15 @@ public class EventDialogFragment extends androidx.fragment.app.DialogFragment im
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        open = view.findViewById(R.id.open);
+        close = view.findViewById(R.id.close);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        open.setOnClickListener(this);
+        close.setOnClickListener(this);
     }
 
     public void onClick(View view){
@@ -82,7 +88,6 @@ public class EventDialogFragment extends androidx.fragment.app.DialogFragment im
                 break;
         }
     }
-
     private void backPressed (){
         getActivity().onBackPressed();
     }

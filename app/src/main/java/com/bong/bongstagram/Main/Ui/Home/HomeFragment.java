@@ -32,11 +32,18 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
-        Context context = view.getContext();
         ((MainActivity) getActivity()).bottomNavi(MainActivity.Type.home);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.home);
         setHasOptionsMenu(true);
 
+//        ((MainActivity)getActivity()).reFairView();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Context context = view.getContext();
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -45,16 +52,12 @@ public class HomeFragment extends Fragment {
 
         homeAdapter = new HomeAdapter(context, new Movie().getItems());
         recyclerView.setAdapter(homeAdapter);
-
-        ((MainActivity)getActivity()).reFairView();
-
-        return view;
+        homeAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        homeAdapter.notifyDataSetChanged();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

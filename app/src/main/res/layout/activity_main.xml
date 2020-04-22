@@ -26,39 +26,36 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/text_logo"
-                    android:contentDescription="TODO" />
+                    tools:ignore="ContentDescription" />
                 <LinearLayout
                     android:id="@+id/search_group"
                     android:layout_width="350dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left">
+                    android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/search_image"
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/baseline_search_24" />
+                        android:src="@drawable/baseline_search_24"
+                        tools:ignore="ContentDescription" />
 
                     <EditText
                         android:id="@+id/main_search_bar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:hint="Search..." />
+                        android:hint="@string/title_search_desc" />
 
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/overlay_dark_80"
-                    android:textSize="20dp"
-                    android:text="address"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    />
             </FrameLayout>
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/overlay_dark_80"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -67,7 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:id="@+id/contentFrame"
             android:layout_width="match_parent"

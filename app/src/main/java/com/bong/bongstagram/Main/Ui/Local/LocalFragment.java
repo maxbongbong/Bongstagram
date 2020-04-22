@@ -112,8 +112,8 @@ public class LocalFragment extends Fragment {
             Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             return "지오코더 서비스 사용불가";
         }catch (IllegalArgumentException e){
-            Toast.makeText(getContext(), "잘못된 GPS좌표", Toast.LENGTH_LONG).show();
-            return "잘못된 GPS좌표";
+            Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
         }
         if(addresses == null || addresses.size() == 0){
             Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
@@ -176,7 +176,7 @@ public class LocalFragment extends Fragment {
 
         switch (requestCode) {
             case GPS_ENABLE_REQUEST_CODE:
-                //사용자가 GPS활성 시켰는지 검사
+                //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
                     if (checkLocationServicesStatus()) {
                         Log.e("@@@", "onActivityResult = GPS활성화 되있음.");

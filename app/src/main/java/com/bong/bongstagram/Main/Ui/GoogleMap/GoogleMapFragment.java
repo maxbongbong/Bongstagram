@@ -79,6 +79,17 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_googlemap, container, false);
+
+        popularText = view.findViewById(R.id.popular_Text);
+        popularText.setSelected(true);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         ImageView profile = view.findViewById(R.id.circle_Image);
         Context context = view.getContext();
         recyclerView = view.findViewById(R.id.google_recycler);
@@ -92,6 +103,7 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
 
         popularText = view.findViewById(R.id.popular_Text);
         recentText = view.findViewById(R.id.recent_Text);
+
 
         if (getArguments() != null) {
             String imageUrl = getArguments().getString("image");
@@ -111,12 +123,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.google);
         setHasOptionsMenu(true);
 
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         TextView btn = view.findViewById(R.id.google_Btn);
         btn.setOnClickListener(v -> {
             EventDialogFragment e = EventDialogFragment.getInstance();
@@ -136,7 +142,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         popularText.setOnClickListener(v -> {
             popularText.setSelected(true);
             recentText.setSelected(false);
-            Context context = view.getContext();
             googleAdapter = new GoogleAdapter(context, new Image().getDummy());
             recyclerView.setAdapter(googleAdapter);
         });
@@ -144,7 +149,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         recentText.setOnClickListener(v -> {
             recentText.setSelected(true);
             popularText.setSelected(false);
-            Context context = view.getContext();
             googleAdapter = new GoogleAdapter(context, new Image().secondDummy());
             recyclerView.setAdapter(googleAdapter);
         });
