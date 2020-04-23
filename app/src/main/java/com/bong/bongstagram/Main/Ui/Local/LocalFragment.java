@@ -40,13 +40,13 @@ public class LocalFragment extends Fragment {
     private GpsTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE = 200;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    private String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((MainActivity)getActivity()).Toolbar(MainActivity.Type.local);
         View view = inflater.inflate(R.layout.fragment_local, container, false);
+        ((MainActivity)getActivity()).Toolbar(MainActivity.Type.local);
         if (!checkLocationServicesStatus()) showDialogForLocationServiceSetting();
         else checkRunTimePermission();
 
@@ -93,11 +93,11 @@ public class LocalFragment extends Fragment {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[0])) {
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
                 Toast.makeText(getContext(), "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult 에서 수신됩니다.
                 ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
             } else {
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
-                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                // 요청 결과는 onRequestPermissionResult 에서 수신됩니다.
                 ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
             }
         }
@@ -179,7 +179,7 @@ public class LocalFragment extends Fragment {
                 //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
                     if (checkLocationServicesStatus()) {
-                        Log.e("@@@", "onActivityResult = GPS활성화 되있음.");
+                        Log.e("@@@", "onActivityResult = GPS 활성화 되있음.");
                         checkRunTimePermission();
                         return;
                     }

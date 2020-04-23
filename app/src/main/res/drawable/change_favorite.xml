@@ -3,10 +3,10 @@
     <!-- 클릭 후 활동 아이콘 -->
     <item
         android:state_pressed = "true"
-        android:drawable="@drawable/baseline_favorite_24" />
+        android:drawable="@drawable/ic_favorite" />
     <item
         android:state_selected="true"
-        android:drawable="@drawable/baseline_favorite_24"/>
+        android:drawable="@drawable/ic_favorite"/>
     <!-- 클릭 전 활동 아이콘 -->
     <item
         android:state_pressed = "false"
@@ -14,4 +14,11 @@
     <item
         android:state_selected="false"
         android:drawable="@drawable/baseline_favorite_border_24" />
+<!--    <item-->
+<!--        android:state_enabled="false"-->
+<!--        android:drawable="@drawable/baseline_favorite_border_24" />-->
+<!--    <item android:drawable = "@drawable/ic_favorite"-->
+<!--        android:state_checked="true"/>-->
+<!--    <item android:drawable="@drawable/baseline_favorite_border_24"-->
+<!--        android:state_checked="false"/>-->
 </selector>

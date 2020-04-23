@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -36,13 +37,13 @@ public class HomeFragment extends Fragment {
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.home);
         setHasOptionsMenu(true);
 
-//        ((MainActivity)getActivity()).reFairView();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Context context = view.getContext();
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

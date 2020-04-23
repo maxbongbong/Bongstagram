@@ -55,6 +55,7 @@
         android:id="@+id/frame_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:backgroundTint="#00ff0000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,21 +64,22 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00ff0000"
-            android:src="@drawable/change_activity"
+            android:backgroundTint="@color/colorDefault"
+            android:id="@+id/btn_favorite"
+            android:src="@drawable/change_favorite"
             tools:ignore="ContentDescription" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00ff0000"
+            android:backgroundTint="@color/colorDefault"
             android:src="@drawable/outline_mode_comment_24"
             tools:ignore="ContentDescription" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00ff0000"
+            android:backgroundTint="@color/colorDefault"
             android:src="@drawable/outline_near_me_24"
             tools:ignore="ContentDescription" />
 

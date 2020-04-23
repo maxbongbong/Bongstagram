@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     private ArrayList<MovieList> movieLists;
     private LayoutInflater mInflate;
     private GpsTracker gpsTracker;
+    private boolean flag;
 
     public HomeAdapter(Context context, ArrayList<MovieList> movieList){
         this.context = context;
@@ -73,6 +77,21 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
             ((MainActivity)context).changeFragment(MainActivity.Type.google, googleFragment);
         });
         holder.textView3.setText(item.getDesc());
+
+        Animation mAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.scale_heart);
+        mAnim.setInterpolator(context.getApplicationContext(), android.R.anim.accelerate_interpolator);
+        flag = true;
+        holder.imageButton.setOnClickListener(v -> {
+            if(flag){
+                v.startAnimation(mAnim);
+                holder.imageButton.setSelected(true);
+                flag = false;
+            } else {
+                v.startAnimation(mAnim);
+                holder.imageButton.setSelected(false);
+                flag = true;
+            }
+        });
     }
 
     @Override
@@ -83,6 +102,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     public class Holder extends RecyclerView.ViewHolder{
         ImageView imageView, imageView2;
         TextView textView1, textView2, textView3;
+        ImageButton imageButton;
 
         public Holder(@NonNull View itemView){
             super(itemView);
@@ -91,6 +111,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
             textView1 = itemView.findViewById(R.id.username);
             textView2 = itemView.findViewById(R.id.fullname);
             textView3 = itemView.findViewById(R.id.homeText);
+            imageButton = itemView.findViewById(R.id.btn_favorite);
         }
     }
 
