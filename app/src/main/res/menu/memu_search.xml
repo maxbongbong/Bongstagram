@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/miout"
+        android:id="@+id/miOut"
         android:icon="@drawable/baseline_all_out_24"
         app:showAsAction="ifRoom"
-        android:title="@string/icon_allout"
+        android:title="@string/icon_allOut"
         />
 </menu>

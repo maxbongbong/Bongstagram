@@ -4,21 +4,27 @@
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:color">@color/colorDefault</item>
+        <item name="colorPrimary">@color/colorDefault</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:actionModeBackground">@color/blue_grey_600</item>
         <item name="android:dialogTheme">@style/Dialog.Theme</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/colorText</item>
     </style>
 
-    <style name="FullThema">
+    <style name="ToolbarTitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+
+    </style>
+
+    <style name="FullTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="FullThema_Release">
+    <style name="FullTheme_Release">
         <item name="android:windowFullscreen">false</item>
     </style>
 

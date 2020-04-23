@@ -7,16 +7,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bong.bongstagram.Main.Ui.Activity.ActivityFragment;
 import com.bong.bongstagram.Main.Ui.Gallery.GalleryFragment;
+import com.bong.bongstagram.Main.Ui.GoogleMap.GoogleMapFragment;
 import com.bong.bongstagram.Main.Ui.Home.HomeFragment;
 import com.bong.bongstagram.Main.Ui.Profile.ProfileFragment;
 import com.bong.bongstagram.Main.Ui.Search.SearchFragment;
@@ -24,10 +27,12 @@ import com.bong.bongstagram.Main.Ui.Splash.SplashFragment;
 import com.bong.bongstagram.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleMapFragment.OnApplySelectedListener {
     public static EditText edittext;
-    private ImageView logo;
-    private ImageView searchimage;
+    private ImageView logo, searchImage;
+    private String address;
+    private TextView toolbarTitle;
+    private FrameLayout mainFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,26 +61,31 @@ public class MainActivity extends AppCompatActivity {
     public void Toolbar(Type type){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        logo = findViewById(R.id.logo_image);
-        searchimage = findViewById(R.id.search_iamge);
-        edittext = findViewById(R.id.main_search_bar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mainFrame = findViewById(R.id.main_frame);
+        toolbarTitle = findViewById(R.id.toolbar_title);
+        logo = findViewById(R.id.logo_image);
+        searchImage = findViewById(R.id.search_image);
+        edittext = findViewById(R.id.main_search_bar);
+
         switch (type){
             case splash:
                 getSupportActionBar().hide();
                 break;
             case home:
                 getSupportActionBar().show();
+                mainFrame.setVisibility(View.VISIBLE);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.outline_camera_alt_24);
                 logo.setVisibility(View.VISIBLE);
-                searchimage.setVisibility(View.INVISIBLE);
-                edittext.setVisibility(View.INVISIBLE);
+                searchImage.setVisibility(View.GONE);
+                edittext.setVisibility(View.GONE);
                 break;
             case search:
+                mainFrame.setVisibility(View.VISIBLE);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                logo.setVisibility(View.INVISIBLE);
-                searchimage.setVisibility(View.VISIBLE);
+                logo.setVisibility(View.GONE);
+                searchImage.setVisibility(View.VISIBLE);
                 edittext.setVisibility(View.VISIBLE);
                 break;
             case gallery:
@@ -90,31 +100,32 @@ public class MainActivity extends AppCompatActivity {
             case local:
                 hideBar(Type.local);
                 break;
+            case google:
+                hideBar(Type.google);
+                break;
         }
     }
 
     private void hideBar(Type type){
-        logo = findViewById(R.id.logo_image);
-        searchimage = findViewById(R.id.search_iamge);
-        edittext = findViewById(R.id.main_search_bar);
-        logo.setVisibility(View.INVISIBLE);
-        searchimage.setVisibility(View.INVISIBLE);
-        edittext.setVisibility(View.INVISIBLE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-
+        mainFrame.setVisibility(View.GONE);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         switch (type){
             case gallery:
-                getSupportActionBar().setTitle(R.string.title_gallery);
+                toolbarTitle.setText(R.string.title_gallery);
                 break;
             case activity:
-                getSupportActionBar().setTitle(R.string.title_activity);
+                toolbarTitle.setText(R.string.title_activity);
                 break;
             case profile:
-                getSupportActionBar().setTitle(R.string.title_profile);
+                toolbarTitle.setText(R.string.title_profile);
                 break;
             case local:
-                getSupportActionBar().setTitle("새 게시물");
+                toolbarTitle.setText(R.string.title_local);
+                break;
+            case google:
+                toolbarTitle.setText(address);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_keyboard_backspace_24);
                 break;
         }
     }
@@ -123,14 +134,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id){
+            case android.R.id.home:
+                Fragment homeFragment = new HomeFragment();
+                changeFragment(Type.home, homeFragment);
+                break;
             case R.layout.recyclerview:
-                return  true;
+                return true;
         }
             return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCategoryApplySelected(String address) {
+        this.address = address;
+    }
+
     public enum Type{
-        splash, home, search, gallery, activity, profile, local
+        splash, home, search, gallery, activity, profile, local, google
     }
 
     public void changeFragment(Type type, Fragment fragment){
@@ -145,42 +165,79 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//    public void reFairView(){
+//        Display display = getWindowManager().getDefaultDisplay();
+//        LinearLayout layout = findViewById(R.id.linearLayout7);
+//        int w = display.getWidth();
+//        int h = display.getHeight();
+//        Log.e("높이", "높이 = " + h);
+//        LinearLayout.LayoutParams position = new LinearLayout.LayoutParams(w, h);
+//        layout.setLayoutParams(new LinearLayout.LayoutParams(position));
+////        DisplayMetrics outMetrics = new DisplayMetrics();
+////        getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+////        h = 100 * (int)outMetrics.density;
+//        Log.e("높이", "높이 = " + h);
+//        int bottom = 0;
+//        int resourceBottom = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+//        if(resourceBottom > 0 ) bottom = getResources().getDimensionPixelSize(resourceBottom);
+//        Log.e("bottom", "bottom = " + bottom);
+//    }
+
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
             switch (menuItem.getItemId()){
                 case R.id.miHome:
-                    HomeFragment fragmenthome = new HomeFragment();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragmenthome).commit();
+                    fragment(Type.home);
                     break;
                 case R.id.miSearch:
-                    SearchFragment fragmentsearch = new SearchFragment();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragmentsearch).commit();
+                    fragment(Type.search);
                     break;
                 case R.id.miGallery:
-                    GalleryFragment fragmentgallery = new GalleryFragment();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragmentgallery).commit();
+                    fragment(Type.gallery);
                     break;
                 case R.id.miActivity:
-                    ActivityFragment fragmentActivity = new ActivityFragment();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragmentActivity).commit();
+                    fragment(Type.activity);
                     break;
                 case R.id.miProfile:
-                    ProfileFragment fragmentprofile = new ProfileFragment();
-                    transaction.addToBackStack(null);
-                    transaction.replace(R.id.contentFrame, fragmentprofile).commit();
+                    fragment(Type.profile);
                     break;
             }
             return true;
         }
     }
 
+    private void fragment(Type type){
+        switch (type.ordinal()){
+            case 1:
+                HomeFragment fragmentHome = new HomeFragment();
+                test(fragmentHome);
+                break;
+            case 2:
+                SearchFragment fragmentSearch = new SearchFragment();
+                test(fragmentSearch);
+                break;
+            case 3:
+                GalleryFragment fragmentGallery = new GalleryFragment();
+                test(fragmentGallery);
+                break;
+            case 4:
+                ActivityFragment fragmentActivity = new ActivityFragment();
+                test(fragmentActivity);
+                break;
+            case 5:
+                ProfileFragment fragmentProfile = new ProfileFragment();
+                test(fragmentProfile);
+                break;
+        }
+    }
+
+    private void test(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.contentFrame, fragment).commit();
+    }
 }
 
 

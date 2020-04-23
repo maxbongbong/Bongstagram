@@ -35,18 +35,20 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
         Context context = view.getContext();
+
         ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.search);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.search);
         setHasOptionsMenu(true);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
 
         searchAdapter = new SearchAdapter(context, new Movie().getItems());
         recyclerView.setAdapter(searchAdapter);
+
+        recyclerView.setHasFixedSize(true);
 
         EditText search_bar2 = MainActivity.edittext;
         search_bar2.addTextChangedListener(new TextWatcher() {
@@ -61,6 +63,12 @@ public class SearchFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        searchAdapter.notifyDataSetChanged();
     }
 
     @Override

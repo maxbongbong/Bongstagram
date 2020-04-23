@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,20 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bong.bongstagram.Main.Model.MovieList;
 import com.bong.bongstagram.R;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> implements Filterable {
-    Context context;
-    private ArrayList<MovieList> unFilterlist;
-    private ArrayList<MovieList> filteredlist;
+    private Context context;
+    private ArrayList<MovieList> unFilterList;
+    private ArrayList<MovieList> filteredList;
     private LayoutInflater mInflate;
 
     public SearchAdapter(Context context, ArrayList<MovieList> movieList){
         this.context = context;
         this.mInflate = LayoutInflater.from(context);
-        this.unFilterlist = movieList;
-        this.filteredlist = movieList;
+        this.unFilterList = movieList;
+        this.filteredList = movieList;
     }
 
     @NonNull
@@ -41,22 +43,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> im
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        MovieList item = filteredlist.get(position);
+        MovieList item = filteredList.get(position);
+        Glide.with(holder.itemView.getContext())
+                .load(item.getUrl())
+                .into(holder.imageView);
         holder.textView1.setText(item.getTitle());
         holder.textView2.setText(item.getDesc());
     }
 
     @Override
     public int getItemCount() {
-        return filteredlist.size();
+        return filteredList.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder{
+        ImageView imageView;
         TextView textView1, textView2;
         public Holder(@NonNull View itemView){
             super(itemView);
+            imageView = itemView.findViewById(R.id.image_profile);
             textView1 = itemView.findViewById(R.id.movieName);
-            textView2 = itemView.findViewById(R.id.fullname);
+            textView2 = itemView.findViewById(R.id.fullName);
         }
     }
 
@@ -67,25 +74,25 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> im
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
                 if(charString.isEmpty()){
-                    filteredlist = unFilterlist;
+                    filteredList = unFilterList;
                 } else {
                     ArrayList<MovieList> filteringList = new ArrayList<>();
-                    for(MovieList item : unFilterlist){
+                    for(MovieList item : unFilterList){
                         if (item.getTitle().toLowerCase().contains(charString.toLowerCase())) {
                             filteringList.add(item);
                         }
                     }
-                    filteredlist = filteringList;
+                    filteredList = filteringList;
                 }
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredlist;
+                filterResults.values = filteredList;
 
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredlist = (ArrayList<MovieList>)results.values;
+                filteredList = (ArrayList<MovieList>)results.values;
                 notifyDataSetChanged();
             }
         };
