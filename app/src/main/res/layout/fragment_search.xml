@@ -36,20 +36,20 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="username"
+            android:text="@string/title_name"
             android:textColor="@color/overlay_dark_80"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:text="@string/title_name"
             android:id="@+id/fullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="5dp"
             android:maxLines="1"
-            android:text="Full Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username" />
     </LinearLayout>

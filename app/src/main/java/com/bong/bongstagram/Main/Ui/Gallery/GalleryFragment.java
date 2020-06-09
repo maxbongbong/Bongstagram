@@ -8,13 +8,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +41,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class GalleryFragment extends Fragment {
 
@@ -52,13 +52,13 @@ public class GalleryFragment extends Fragment {
     private File tempFile;
     private boolean isPermission;
 
-    String[] PERMISSIONS = {
+    private String[] PERMISSIONS = {
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
     };
 
-    public boolean hasPermission(Context context, String... permissions){
+    private boolean hasPermission(Context context, String... permissions){
         if (context != null && permissions != null) {
             for(String permission : permissions) {
                 if(ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
@@ -74,12 +74,12 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         tedPermission();
 
-        ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.gallery);
+        ((MainActivity) Objects.requireNonNull(getActivity())).bottomNavigation(MainActivity.Type.gallery);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.gallery);
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         LinearLayout linearLayout = view.findViewById(R.id.linear_gallery);
-        if (hasPermission(getContext(), PERMISSIONS) == true && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (hasPermission(getContext(), PERMISSIONS) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             linearLayout.setVisibility(View.GONE);
         } else {
             linearLayout.setVisibility(View.VISIBLE);
@@ -128,13 +128,14 @@ public class GalleryFragment extends Fragment {
             }
             return;
         }
+        Fragment localFragment = new LocalFragment();
         switch (requestCode) {
             case PICK_FROM_ALBUM:
                 sendPicture(data.getData());
+                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
                 break;
             case PICK_FORM_CAMERA:
                 getPictureForPhoto();
-                Fragment localFragment = new LocalFragment();
                 ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
                 break;
             default:

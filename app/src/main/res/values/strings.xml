@@ -7,14 +7,31 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_gallery">Gallery</string>
-    <string name="title_activity">Activity</string>
+    <string name="title_activity">활동</string>
     <string name="title_profile">Profile</string>
     <string name="title_local">새 게시물</string>
     <string name="title_google">구글맵</string>
     <string name="title_popular">인기</string>
     <string name="title_recent">최근 게시물</string>
     <string name="title_toolbar_title">제목</string>
+    <string name="title_see">자세히 보기</string>
+    <string name="title_newActivity">새로운 활동</string>
+    <string name="title_yesterday">어제</string>
+    <string name="title_today">오늘</string>
+    <string name="title_week">이번 주</string>
+    <string name="title_name">유저 이름</string>
+    <string name="title_before_activity">이전 활동</string>
     <string name="title_search_desc">Search...</string>
+    <string name="title_masterName">2_bong</string>
+    <string name="title_image_shared">님이 사진을 공유했습니다.</string>
+    <string name="title_reply_layout">댓글</string>
+    <string name="title_reply">답글 달기</string>
+    <string name="title_reply_hint">댓글 달기…</string>
+    <string name="title_reply_activity">게시</string>
+    <string name="title_reply_like">좋아요</string>
+    <string name="title_reply_hide">답글 숨기기</string>
+    <string name="title_reply_show">이전 답글 보기</string>
+    <string name="title_reply_selected"> 선택됨</string>
 
     <!-- Icon -->
     <string name="icon_camera">Camera</string>

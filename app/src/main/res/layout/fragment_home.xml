@@ -6,10 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="7dp"
     android:layout_marginBottom="5dp"
-    android:theme="@style/FullTheme_Release"
-    >
+    android:theme="@style/FullTheme_Release">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_profile"
@@ -24,12 +23,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="9dp"
+        android:paddingStart="9dp"
         app:layout_constraintStart_toEndOf="@+id/image_profile"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry">
 
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/topUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/fullname"
+            android:id="@+id/fullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorDefault"
             android:src="@drawable/outline_mode_comment_24"
+            android:id="@+id/reply_btn"
             tools:ignore="ContentDescription" />
 
         <ImageButton
@@ -106,12 +107,12 @@
         >
 
         <TextView
-            android:id="@id/username"
+            android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@string/title_masterName"
             android:maxLines="1"
-            android:text="2_Bong"
             android:textColor="@color/overlay_dark_80" />
 
         <TextView
@@ -122,7 +123,6 @@
             android:layout_weight="3"
             android:maxLines="3"
             android:enabled="true"
-            android:text="오늘은 3월 11일 오후 7시 52분 홈화면 구성 테스트"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="642dp" />

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.bong.bongstagram.Main.Model.MovieList;
 import com.bong.bongstagram.Main.Ui.Dialog.EventDialogFragment;
 import com.bong.bongstagram.Main.Ui.GoogleMap.GoogleMapFragment;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
+import com.bong.bongstagram.Main.Ui.Reply.ReplyFragment;
 import com.bong.bongstagram.R;
 import com.bumptech.glide.Glide;
 
@@ -37,7 +39,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     private ArrayList<MovieList> movieLists;
     private LayoutInflater mInflate;
     private GpsTracker gpsTracker;
-    private boolean flag;
+    private MainActivity activity;
 
     public HomeAdapter(Context context, ArrayList<MovieList> movieList){
         this.context = context;
@@ -49,10 +51,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     @Override
     public HomeAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert mInflate != null;
         View view = mInflate.inflate(R.layout.fragment_home, parent, false);
-        Holder holder = new Holder(view);
-
-        return holder;
+        return new Holder(view);
     }
 
     @Override
@@ -77,20 +78,30 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
             ((MainActivity)context).changeFragment(MainActivity.Type.google, googleFragment);
         });
         holder.textView3.setText(item.getDesc());
+        holder.textView4.setText(item.getTitle());
 
         Animation mAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.scale_heart);
         mAnim.setInterpolator(context.getApplicationContext(), android.R.anim.accelerate_interpolator);
-        flag = true;
-        holder.imageButton.setOnClickListener(v -> {
-            if(flag){
-                v.startAnimation(mAnim);
-                holder.imageButton.setSelected(true);
-                flag = false;
+
+        holder.imageButton1.setOnClickListener(v -> {
+            v.startAnimation(mAnim);
+            if(!item.isHeart()){
+                holder.imageButton1.setSelected(true);
+                item.setHeart(true);
             } else {
-                v.startAnimation(mAnim);
-                holder.imageButton.setSelected(false);
-                flag = true;
+                holder.imageButton1.setSelected(false);
+                item.setHeart(false);
             }
+        });
+        holder.imageButton2.setOnClickListener(v -> {
+            Fragment replyFragment = new ReplyFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", item.getTitle());
+            bundle.putString("desc", item.getDesc());
+            bundle.putString("image", item.getUrl());
+            bundle.putString("date", item.getDate());
+            replyFragment.setArguments(bundle);
+            ((MainActivity)context).changeFragment(MainActivity.Type.reply, replyFragment);
         });
     }
 
@@ -101,17 +112,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
 
     public class Holder extends RecyclerView.ViewHolder{
         ImageView imageView, imageView2;
-        TextView textView1, textView2, textView3;
-        ImageButton imageButton;
+        TextView textView1, textView2, textView3, textView4;
+        ImageButton imageButton1, imageButton2;
 
         public Holder(@NonNull View itemView){
             super(itemView);
             imageView = itemView.findViewById(R.id.image_frame);
             imageView2 = itemView.findViewById(R.id.image_profile);
-            textView1 = itemView.findViewById(R.id.username);
-            textView2 = itemView.findViewById(R.id.fullname);
+            textView1 = itemView.findViewById(R.id.topUsername);
+            textView2 = itemView.findViewById(R.id.fullName);
             textView3 = itemView.findViewById(R.id.homeText);
-            imageButton = itemView.findViewById(R.id.btn_favorite);
+            textView4 = itemView.findViewById(R.id.userName);
+            imageButton1 = itemView.findViewById(R.id.btn_favorite);
+            imageButton2 = itemView.findViewById(R.id.reply_btn);
         }
     }
 
@@ -148,7 +161,5 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     public interface addressData{
         void itemAddress(String address);
     }
-
-
 }
 

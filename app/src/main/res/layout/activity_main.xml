@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
             app:titleTextColor="@color/toolbar_title">
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -44,14 +45,13 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:hint="@string/title_search_desc" />
-
                 </LinearLayout>
             </FrameLayout>
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
                 android:textColor="@color/overlay_dark_80"
                 android:textSize="20sp"
                 android:ellipsize="end"

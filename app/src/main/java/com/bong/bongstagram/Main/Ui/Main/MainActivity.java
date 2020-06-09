@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,13 +22,16 @@ import com.bong.bongstagram.Main.Ui.Activity.ActivityFragment;
 import com.bong.bongstagram.Main.Ui.Gallery.GalleryFragment;
 import com.bong.bongstagram.Main.Ui.GoogleMap.GoogleMapFragment;
 import com.bong.bongstagram.Main.Ui.Home.HomeFragment;
+import com.bong.bongstagram.Main.Ui.Local.LocalFragment;
 import com.bong.bongstagram.Main.Ui.Profile.ProfileFragment;
+import com.bong.bongstagram.Main.Ui.Reply.ReplyFragment;
 import com.bong.bongstagram.Main.Ui.Search.SearchFragment;
 import com.bong.bongstagram.Main.Ui.Splash.SplashFragment;
 import com.bong.bongstagram.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements GoogleMapFragment.OnApplySelectedListener {
+    @SuppressLint("StaticFieldLeak")
     public static EditText edittext;
     private ImageView logo, searchImage;
     private String address;
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
         setContentView(R.layout.activity_main);
         Fragment splashFragment = new SplashFragment();
         changeFragment(Type.splash, splashFragment);
-        bottomNavi(Type.splash);
+        bottomNavigation(Type.splash);
     }
 
     @Override
@@ -48,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
         return super.onTouchEvent(event);
     }
 
-    public void bottomNavi(Type t){
+    public void bottomNavigation(Type t){
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
-        if (t.ordinal() == 0 || t.ordinal() == 3) {
+        if (t.ordinal() == 0 || t.ordinal() == 3 || t.ordinal() == 8) {
             bottomNavigationView.setVisibility(View.GONE);
         }else{
             bottomNavigationView.setVisibility(View.VISIBLE);
@@ -103,21 +107,30 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
             case google:
                 hideBar(Type.google);
                 break;
+            case reply:
+                toolbar.setVisibility(View.VISIBLE);
+                hideBar(Type.reply);
+                break;
+            case hide:
+                toolbar.setVisibility(View.GONE);
+                break;
         }
     }
 
     private void hideBar(Type type){
         mainFrame.setVisibility(View.GONE);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         switch (type){
             case gallery:
                 toolbarTitle.setText(R.string.title_gallery);
                 break;
             case activity:
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 toolbarTitle.setText(R.string.title_activity);
                 break;
             case profile:
                 toolbarTitle.setText(R.string.title_profile);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_keyboard_arrow_down_24);
                 break;
             case local:
                 toolbarTitle.setText(R.string.title_local);
@@ -127,13 +140,17 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_keyboard_backspace_24);
                 break;
+            case reply:
+                toolbarTitle.setText(R.string.title_reply_layout);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_keyboard_backspace_24);
+                break;
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
+        switch (item.getItemId()){
             case android.R.id.home:
                 Fragment homeFragment = new HomeFragment();
                 changeFragment(Type.home, homeFragment);
@@ -150,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
     }
 
     public enum Type{
-        splash, home, search, gallery, activity, profile, local, google
+        splash, home, search, gallery, activity, profile, local, google, reply, hide
     }
 
     public void changeFragment(Type type, Fragment fragment){
@@ -164,24 +181,6 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
             transaction.replace(R.id.contentFrame, fragment).commit();
         }
     }
-
-//    public void reFairView(){
-//        Display display = getWindowManager().getDefaultDisplay();
-//        LinearLayout layout = findViewById(R.id.linearLayout7);
-//        int w = display.getWidth();
-//        int h = display.getHeight();
-//        Log.e("높이", "높이 = " + h);
-//        LinearLayout.LayoutParams position = new LinearLayout.LayoutParams(w, h);
-//        layout.setLayoutParams(new LinearLayout.LayoutParams(position));
-////        DisplayMetrics outMetrics = new DisplayMetrics();
-////        getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
-////        h = 100 * (int)outMetrics.density;
-//        Log.e("높이", "높이 = " + h);
-//        int bottom = 0;
-//        int resourceBottom = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-//        if(resourceBottom > 0 ) bottom = getResources().getDimensionPixelSize(resourceBottom);
-//        Log.e("bottom", "bottom = " + bottom);
-//    }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
@@ -228,6 +227,18 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
             case 5:
                 ProfileFragment fragmentProfile = new ProfileFragment();
                 test(fragmentProfile);
+                break;
+            case 6:
+                LocalFragment localFragment = new LocalFragment();
+                test(localFragment);
+                break;
+            case 7:
+                GoogleMapFragment googleMapFragment = new GoogleMapFragment();
+                test(googleMapFragment);
+                break;
+            case 8:
+                ReplyFragment replyFragment = new ReplyFragment();
+                test(replyFragment);
                 break;
         }
     }
