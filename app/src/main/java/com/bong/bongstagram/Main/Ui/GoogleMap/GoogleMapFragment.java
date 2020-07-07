@@ -53,12 +53,12 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleAdapter googleAdapter;
     private MapView mapView = null;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private Marker currentMarker = null;
     private double latitude;
     private double longitude;
     private TextView popularText;
     private TextView recentText;
+
     public GoogleMapFragment() {}
 
     @Override
@@ -97,7 +97,7 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         recyclerView = view.findViewById(R.id.google_recycler);
         recyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
 
         googleAdapter = new GoogleAdapter(context, new Image().getDummy());

@@ -16,8 +16,12 @@
         <item name="android:textColor">@color/colorText</item>
     </style>
 
-    <style name="ToolbarTitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColor">@color/overlay_dark_80</item>
+        <item name="android:textColorHint">@color/grey_40</item>
+        <item name="android:background">@drawable/edt_bg_selector</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <style name="FullTheme">

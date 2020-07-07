@@ -36,7 +36,7 @@ public class ReplyList {
         this.reply = reply;
     }
 
-    public boolean isHeart() {
+    public boolean getHeart() {
         return heart;
     }
 

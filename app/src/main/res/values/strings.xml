@@ -32,7 +32,18 @@
     <string name="title_reply_hide">답글 숨기기</string>
     <string name="title_reply_show">이전 답글 보기</string>
     <string name="title_reply_selected"> 선택됨</string>
-
+    <string name="title_profile_correction">프로필 수정</string>
+    <string name="title_profile_promotion">홍보</string>
+    <string name="title_profile_insite">인사이트</string>
+    <string name="title_profile_post">게시물</string>
+    <string name="title_profile_follower">팔로워</string>
+    <string name="title_profile_following">팔로잉</string>
+    <string name="title_profile_modify">프로필 수정</string>
+    <string name="title_profile_ImageChange">프로필 사진 변경</string>
+    <string name="title_profile_modify_Name">Name</string>
+    <string name="title_profile_modify_Username">Username</string>
+    <string name="title_profile_modify_Website">Website</string>
+    <string name="title_profile_modify_Bio">Bio</string>
     <!-- Icon -->
     <string name="icon_camera">Camera</string>
     <string name="icon_air">Air</string>

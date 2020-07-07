@@ -45,7 +45,6 @@ import java.util.UUID;
 public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickListener {
 
     private ArrayList<ReplyList> replyLists;
-    private List<Integer> selectedItemCount = new ArrayList<>();
     private Button replyBtn;
     private EditText replyEditText = null;
     private String userUUID = null;
@@ -75,8 +74,8 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         super.onViewCreated(view, savedInstanceState);
 
         Context context = view.getContext();
+
         recyclerView = view.findViewById(R.id.reply_recyclerview);
-        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
@@ -120,10 +119,12 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         replyBtn.setEnabled(false);
         replyEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -156,63 +157,96 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
     @Override
     public void onLayOutSelected(View v, int position, SparseBooleanArray mSelectedItems, boolean setEnabled) {
         replyAdapter.notifyDataSetChanged();
-        if (mSelectedItems.get(position, false)) {
-            mSelectedItems.put(position, false);
-            if (!mSelectedItems.get(position)) {
-                for (int i = 0; i < selectedItemCount.size(); i++) {
-                    if (selectedItemCount.get(i) == position) {
-                        selectedItemCount.remove(i);
-                        countItemsTitle(mSelectedItems);
-                    }
-                }
-            }
-            setEnabledBtn();
-            v.setBackgroundColor(getContext().getResources().getColor(R.color.colorDefault));
-            toolbarToggle();
+        toggleItemSelected(position, mSelectedItems);
+        countItemsTitle(mSelectedItems);
+        setEnabledBtn(mSelectedItems);
+
+        ImageView replyToClose = this.getView().findViewById(R.id.reply_Close);
+        replyToClose.setOnClickListener(v1 -> {
+            clearSelectedItems(mSelectedItems);
+            toolbarToggle(mSelectedItems);
+            setEnabledBtn(mSelectedItems);
+        });
+        ImageView trashBtn = this.getView().findViewById(R.id.reply_Trash);
+        trashBtn.setOnClickListener(v1 -> {
+            deleteMethod(mSelectedItems);
+            toolbarToggle(mSelectedItems);
+            setEnabledBtn(mSelectedItems);
+        });
+    }
+
+    /**
+     * 리사이클뷰 아이템 레이아웃 선택 시 상태 변경
+     */
+    private void toggleItemSelected(int position, SparseBooleanArray mSelectedItems) {
+        if (mSelectedItems.get(position, false) == true) {
+            mSelectedItems.delete(position);
+            toolbarToggle(mSelectedItems);
+            replyAdapter.notifyItemChanged(position);
         } else {
             mSelectedItems.put(position, true);
-            selectedItemCount.add(position);
-            countItemsTitle(mSelectedItems);
-            setEnabledBtn();
-            toolbarToggle();
-
-            if (mSelectedItems.get(position)) v.setBackgroundColor(getContext().getResources().getColor(R.color.blue_50));
-            ImageView trashBtn = this.getView().findViewById(R.id.reply_Trash);
-            trashBtn.setOnClickListener(v1 -> {
-                mSelectedItems.clear();
-                deleteMethod();
-                toolbarToggle();
-                listRefresh();
-                setEnabledBtn();
-            });
-            ImageView replyToClose = this.getView().findViewById(R.id.reply_Close);
-            replyToClose.setOnClickListener(v1 -> {
-                mSelectedItems.clear();
-                selectedItemCount.clear();
-                toolbarToggle();
-                listRefresh();
-                setEnabledBtn();
-            });
+            toolbarToggle(mSelectedItems);
+            replyAdapter.notifyItemChanged(position);
         }
     }
 
-    private void setEnabledBtn() {
-        if (selectedItemCount.size() != 0) {
-            ReplyAdapter.setEnabled = false;
+    /**
+     * 아이템 삭제 메소드
+     */
+    private void deleteMethod(SparseBooleanArray mSelectedItems) {
+        deleteItems(mSelectedItems);
+        clearSelectedItems(mSelectedItems);
+    }
 
+    /**
+     * 전체 선택 해제 메서드
+     */
+    private void clearSelectedItems(SparseBooleanArray mSelectedItems) {
+        mSelectedItems.clear();
+        replyAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 리사이클러뷰 삭제 메소드
+     */
+    private void deleteItems(SparseBooleanArray mSelectedItems) {
+        int position;
+        for (int i = mSelectedItems.size() - 1; i >= 0; i--) {
+            position = mSelectedItems.keyAt(i);
+            Log.e("i", "i = " + i);
+            Log.e("position", "position = " + position);
+            replyLists.remove(position);
+            replyAdapter.notifyItemRemoved(position);
+        }
+//        replyAdapter.notifyItemRangeChanged(position, replyLists.size());
+//        replyAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * mSelectedItems 가 0일시 리사이클러뷰 아이템에 버튼 비활성화
+     */
+    private void setEnabledBtn(SparseBooleanArray mSelectedItems) {
+        if (mSelectedItems.size() != 0) {
+            ReplyAdapter.setEnabled = false;
         } else {
             ReplyAdapter.setEnabled = true;
         }
     }
 
+    /**
+     * 툴바 타이틀에 아이템 개수 리턴 메소드
+     */
     private void countItemsTitle(SparseBooleanArray mSelectedItems) {
-        String replyToolbarTitle = selectedItemCount.size() + "개 " + getString(R.string.title_reply_selected);
+        String replyToolbarTitle = mSelectedItems.size() + "개 " + getString(R.string.title_reply_selected);
         toolBarTitle.setText(replyToolbarTitle);
     }
 
-    private void toolbarToggle() {
-        if (selectedItemCount.size() == 0) {
-            replyToolbar.setVisibility(View.GONE);
+    /**
+     * 리사이클러뷰 아이템 레이아웃 클릭시 툴바 토글 메소드
+     */
+    private void toolbarToggle(SparseBooleanArray mSelectedItems) {
+        if (mSelectedItems.size() == 0) {
+            replyToolbar.setVisibility(View.INVISIBLE);
             replyEditTextLayout.setVisibility(View.VISIBLE);
             ((MainActivity) getActivity()).Toolbar(MainActivity.Type.reply);
         } else {
@@ -222,24 +256,9 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         }
     }
 
-    private void deleteMethod() {
-        for (int i = replyLists.size(); i >= 0; i--) {
-            for (int j = 0; j < selectedItemCount.size(); j++) {
-                if (i == selectedItemCount.get(j)) {
-                    deleteItems(i);
-                    selectedItemCount.remove(j);
-                }
-            }
-        }
-    }
-
-    private void deleteItems(int num) {
-        replyLists.remove(num);
-        replyAdapter.notifyItemRemoved(num);
-        replyAdapter.notifyItemRangeChanged(num, replyLists.size());
-        replyAdapter.notifyDataSetChanged();
-    }
-
+    /**
+     * 아이템 추가 시 뷰타입 리턴 메소드
+     */
     private void appendText(int position) {
         showKeyBoard();
         if (position == -1 || replyId == null) {
@@ -248,11 +267,15 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         } else {
             replyToMethod(position);
         }
+
         replyAdapter = new ReplyAdapter(getContext(), replyLists, this);
         recyclerView.setAdapter(replyAdapter);
         replyAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 대댓글 메소드
+     */
     private void replyToMethod(int position) {
         if (replyId != null) {
             showKeyBoard();
@@ -263,6 +286,9 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         }
     }
 
+    /**
+     * 소프트 키보드 메소드
+     */
     private void keyboardSet(int position) {
         replyEditText.setOnEditorActionListener((v, actionId, event) -> {
             boolean handled = false;
@@ -289,6 +315,9 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         });
     }
 
+    /**
+     * 댓글 추가 '게시' 버튼
+     **/
     private void appendBtn(int position) {
         replyBtn.setOnClickListener(v -> {
             replyMessage = replyEditText.getText().toString();
@@ -306,6 +335,9 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         });
     }
 
+    /**
+     * 소프트 키보드 보여주는 메소드
+     */
     private void showKeyBoard() {
         if (replyId != null) {
             String text = "@" + replyId.substring(0, 3) + " ";
@@ -313,16 +345,20 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
             replyEditText.setSelection(replyEditText.length());
         }
         InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert imm != null;
         imm.showSoftInput(replyEditText, 0);
     }
 
+    /**
+     * 소프트 키보드 숨기는 메소드
+     */
     private void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert imm != null;
         imm.hideSoftInputFromWindow(replyEditText.getWindowToken(), 0);
     }
 
+    /**
+     * Date 메소드
+     */
     private String period() {
         SimpleDateFormat nowDate = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
         assert getArguments() != null;
@@ -342,10 +378,5 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
             e.printStackTrace();
         }
         return time;
-    }
-
-    private void listRefresh() {
-        recyclerView.removeAllViewsInLayout();
-        recyclerView.setAdapter(replyAdapter);
     }
 }

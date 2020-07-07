@@ -15,23 +15,11 @@ public class ImageList {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getUrl2() {
         return url2;
     }
 
-    public void setUrl2(String url2) {
-        this.url2 = url2;
-    }
-
     public String getUrl3() {
         return url3;
-    }
-
-    public void setUrl3(String url3) {
-        this.url3 = url3;
     }
 }

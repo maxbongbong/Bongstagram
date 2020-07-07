@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/replyLayout"
+    android:background="@drawable/item_change_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="RtlSymmetry">
@@ -21,17 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
             android:paddingStart="60dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             tools:ignore="RtlSymmetry">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/reply_user_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@drawable/circlebackground"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/test" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -94,6 +98,8 @@
                         android:id="@+id/reply_To"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:layout_marginLeft="15dp"
                         android:text="@string/title_reply"
                         android:textColor="@color/grey_300"

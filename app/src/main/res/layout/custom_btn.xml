@@ -8,10 +8,10 @@
     <Button
         android:id="@+id/custom_btn"
         android:layout_width="250dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:backgroundTint="#00ff0000"
         android:stateListAnimator="@null"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:text="@string/title_see"
         android:textColor="@color/overlay_dark_80"
         tools:ignore="MissingConstraints" />

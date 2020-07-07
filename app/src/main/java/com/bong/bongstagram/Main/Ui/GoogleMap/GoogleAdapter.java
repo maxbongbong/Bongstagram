@@ -2,21 +2,15 @@ package com.bong.bongstagram.Main.Ui.GoogleMap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bong.bongstagram.Main.Model.ImageList;
@@ -41,7 +35,6 @@ public class GoogleAdapter extends RecyclerView.Adapter<GoogleAdapter.Holder> {
     public GoogleAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = mInflate.inflate(R.layout.image_dummy, parent, false);
-
         return new Holder(view);
     }
 
@@ -71,7 +64,6 @@ public class GoogleAdapter extends RecyclerView.Adapter<GoogleAdapter.Holder> {
 
     public void onBindViewHolder(@NonNull GoogleAdapter.Holder holder, int position) {
         ImageList item = imageLists.get(position);
-
         Glide.with(holder.itemView.getContext())
                 .load(item.getUrl())
                 .into(holder.imageView1);

@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,13 +26,13 @@ import com.bong.bongstagram.Main.Ui.Profile.ProfileFragment;
 import com.bong.bongstagram.Main.Ui.Reply.ReplyFragment;
 import com.bong.bongstagram.Main.Ui.Search.SearchFragment;
 import com.bong.bongstagram.Main.Ui.Splash.SplashFragment;
+import com.bong.bongstagram.Main.Ui.Test.TestFragment;
 import com.bong.bongstagram.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements GoogleMapFragment.OnApplySelectedListener {
     @SuppressLint("StaticFieldLeak")
     public static EditText edittext;
-    private ImageView logo, searchImage;
     private String address;
     private TextView toolbarTitle;
     private FrameLayout mainFrame;
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
 
     public void bottomNavigation(Type t){
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
-        if (t.ordinal() == 0 || t.ordinal() == 3 || t.ordinal() == 8) {
+        if (t.ordinal() == 0 || t.ordinal() == 3 || t.ordinal() == 8 || t.ordinal() == 10) {
             bottomNavigationView.setVisibility(View.GONE);
         }else{
             bottomNavigationView.setVisibility(View.VISIBLE);
@@ -68,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainFrame = findViewById(R.id.main_frame);
         toolbarTitle = findViewById(R.id.toolbar_title);
-        logo = findViewById(R.id.logo_image);
-        searchImage = findViewById(R.id.search_image);
+        ImageView logo = findViewById(R.id.logo_image);
+        ImageView searchImage = findViewById(R.id.search_image);
         edittext = findViewById(R.id.main_search_bar);
 
         switch (type){
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
     }
 
     public enum Type{
-        splash, home, search, gallery, activity, profile, local, google, reply, hide
+        splash, home, search, gallery, activity, profile, local, google, reply, hide, modify
     }
 
     public void changeFragment(Type type, Fragment fragment){
@@ -200,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
                     break;
                 case R.id.miProfile:
                     fragment(Type.profile);
+//                    fragment(Type.test);
                     break;
             }
             return true;
@@ -240,12 +240,17 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
                 ReplyFragment replyFragment = new ReplyFragment();
                 test(replyFragment);
                 break;
+            case 10:
+//                TestFragment testFragment = new TestFragment();
+//                test(testFragment);
+                break;
         }
     }
 
     private void test(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
         transaction.addToBackStack(null);
         transaction.replace(R.id.contentFrame, fragment).commit();
     }

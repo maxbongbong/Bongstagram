@@ -1,11 +1,12 @@
 package com.bong.bongstagram.Main.Data;
 
 import com.bong.bongstagram.Main.Model.ImageList;
+import com.bong.bongstagram.Main.Model.MovieList;
 
 import java.util.ArrayList;
 
 public class Image {
-    public ArrayList<ImageList> dummy = new ArrayList<>();
+    private ArrayList<ImageList> dummy = new ArrayList<>();
     public ArrayList<ImageList> getDummy(){
 
         ImageList imageList1 = new ImageList("https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F22068C4E58A3DB8E15", "https://lh3.googleusercontent.com/proxy/6z8hEGddkk7WwMyBpOrv4qIfYI_pS-k9woTwch30uV3q99wQr39uqox1CxtBEoL05Z1zlnfsAu1_VES7J4_UGtmRKiq8OdiXXIZhC28ms-A9I54ayHCcdvkK8tAC-YgqhFKJgD6H4obJ-SEQIT3DKbSzE449Vic23UuYOqj_bt7UQpqiqdsc5vsghfZDPyE0H1vWDWdR4F6tiK1H9GLzQvaDrCd9", "https://t1.daumcdn.net/cfile/tistory/99FFCF3359E40A1E27");
@@ -56,6 +57,27 @@ public class Image {
         dummy.add(imageList9);
         dummy.add(imageList10);
 
+        return dummy;
+    }
+
+    public ArrayList<ImageList> UserImage(){
+        ArrayList<MovieList> movieLists = new Movie().getItems();
+        ArrayList<String> test = new ArrayList<>();
+        ImageList imageList;
+        int j = 0;
+        for (int i = 0; i < movieLists.size(); i++) {
+            if ((j + 1) * 3 > i) {
+                test.add(movieLists.get(i).getUrl());
+                if (test.size() >= 3) {
+                    imageList = new ImageList(test.get(0), test.get(1), test.get(2));
+                    dummy.add(imageList);
+                }
+            } else {
+                test.clear();
+                j = j + 1;
+                i = i - 1;
+            }
+        }
         return dummy;
     }
 }

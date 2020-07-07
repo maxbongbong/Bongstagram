@@ -20,19 +20,18 @@
             android:layout_height="135dp"
             tools:ignore="ContentDescription,HardcodedText" />
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/dummy_image2"
             android:layout_marginRight="2dp"
             android:layout_marginLeft="2dp"
-            android:scaleType="centerCrop"
             android:layout_width="135dp"
             android:layout_height="135dp"
             tools:ignore="ContentDescription,HardcodedText" />
         <ImageView
-            android:id="@+id/dummy_image3"
             android:scaleType="centerCrop"
+            android:id="@+id/dummy_image3"
             android:layout_width="135dp"
             android:layout_height="135dp"
-            tools:ignore="ContentDescription,HardcodedText"
-             />
+            tools:ignore="ContentDescription,HardcodedText" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

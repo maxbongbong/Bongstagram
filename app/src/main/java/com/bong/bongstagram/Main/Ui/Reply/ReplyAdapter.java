@@ -2,18 +2,13 @@ package com.bong.bongstagram.Main.Ui.Reply;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,8 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bong.bongstagram.Main.Data.Image;
 import com.bong.bongstagram.Main.Model.ReplyList;
-import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 
 import java.util.ArrayList;
@@ -41,11 +36,19 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         void onLayOutSelected(View v, int position, SparseBooleanArray mSelectedItems, boolean setEnabled);
     }
 
+    /**
+     * 생성자
+     */
     ReplyAdapter(Context context, ArrayList<ReplyList> replyLists, OnItemClickListener onItemClickListener) {
         this.context = context;
         this.mInflate = LayoutInflater.from(context);
         this.replyLists = replyLists;
         this.mListener = onItemClickListener;
+    }
+
+    public void setData(ArrayList<ReplyList> data) {
+        replyLists = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -54,21 +57,22 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         parent.setBackgroundColor(context.getResources().getColor(R.color.colorDefault));
         if (viewType == ReplyFragment.VIEW_TYPE_A) {
-            assert mInflate != null;
             View view = mInflate.inflate(R.layout.reply_list, parent, false);
             return new AHolder(view);
         } else {
-            assert mInflate != null;
             View view = mInflate.inflate(R.layout.reply_to_list, parent, false);
             return new BHolder(view);
         }
     }
 
+    private boolean isItemSelected(int position) {
+        return mSelectedItems.get(position, false);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        TextView replyToTextView = holder.itemView.findViewById(R.id.reply_To);
-        LinearLayout replyToLayout = holder.itemView.findViewById(R.id.reply_layout);
+
         if (holder instanceof AHolder) {
             userName(((AHolder) holder).replyName, position);
             toggleTextView(((AHolder) holder).replyShortText, ((AHolder) holder).replyLongText, position);
@@ -78,9 +82,14 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             toggleTextView(((BHolder) holder).replyShortText, ((BHolder) holder).replyLongText, position);
             likeMethod(((BHolder) holder).likeBtn, position, ((BHolder) holder).replyLikeCount);
         }
+
+        TextView replyToTextView = holder.itemView.findViewById(R.id.reply_To);
+        LinearLayout replyToLayout = holder.itemView.findViewById(R.id.reply_layout);
+        replyToLayout.setSelected(isItemSelected(position));
+        replyToLayout.setBackground(context.getDrawable(R.drawable.item_change_background));
         replyToTextView.setOnClickListener(v -> mListener.onItemSelected(v, position));
         replyToLayout.setOnClickListener(v -> mListener.onLayOutSelected(v, position, mSelectedItems, setEnabled));
-        Log.e("adapter", "setEnabled = " + setEnabled);
+
         if (setEnabled) {
             replyToTextView.setEnabled(true);
             replyToTextView.setTextColor(context.getResources().getColor(R.color.grey_400));
@@ -104,6 +113,9 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return replyLists.size();
     }
 
+    /**
+     * 유저가 쓴글의 길이에 따라 적용되는 텍스트뷰 메소드
+     **/
     private void toggleTextView(TextView replyShortText, TextView replyLongText, int position) {
         ReplyList item = replyLists.get(position);
         int width = (int) replyShortText.getPaint().measureText(item.getReply());
@@ -119,50 +131,88 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    /**
+     * 유저 아이디 텍스트뷰 메소드
+     **/
     private void userName(TextView textView, int position) {
         textView.setText(replyLists.get(position).getParentId().substring(0, 3));
     }
 
+    /**
+     * 애니메이션 클릭 메소드
+     **/
+    private void animationListener(Animation mAnim, ImageView likeBtn, int position, TextView replyLikeCount) {
+        mAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                likeCount(position, likeBtn, replyLikeCount);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        likeBtn.startAnimation(mAnim);
+    }
+
+    /**
+     * 좋아요 개수 카운트 메소드
+     **/
+    private void likeCount(int position, ImageView likeBtn, TextView replyLikeCount){
+        ReplyList item = replyLists.get(position);
+        Log.e("position", "position = " + position);
+        int likeCount;
+        if (!item.getHeart()) {
+            likeBtn.setSelected(true);
+            item.setHeart(true);
+            item.setLike(item.getLike() + 1);
+            likeCount = item.getLike();
+            if (likeCount != 0) {
+                replyLikeCount.setVisibility(View.VISIBLE);
+                replyLikeCount.setText(R.string.title_reply_like);
+                replyLikeCount.append(likeCount + "개");
+            }
+        } else {
+            likeBtn.setSelected(false);
+            item.setHeart(false);
+            item.setLike(item.getLike() - 1);
+            likeCount = item.getLike();
+            if (likeCount == 0) replyLikeCount.setVisibility(View.GONE);
+            else {
+                replyLikeCount.setVisibility(View.VISIBLE);
+                replyLikeCount.setText(R.string.title_reply_like);
+                replyLikeCount.append(likeCount + "개");
+            }
+        }
+//        notifyItemChanged(position);
+    }
+
+    /**
+     * 좋아요 버튼 메소드
+     **/
     private void likeMethod(ImageView likeBtn, int position, TextView replyLikeCount) {
+        likeBtn.setSelected(replyLists.get(position).getHeart());
+        Log.e("likeBtn", "likeBtn = " + replyLists.get(position).getHeart());
         if (setEnabled) {
+            Animation mAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.scale_heart);
+            mAnim.setInterpolator(context.getApplicationContext(), android.R.anim.accelerate_interpolator);
             replyLikeCount.setTextColor(context.getResources().getColor(R.color.grey_400));
             likeBtn.setEnabled(true);
-            likeBtn.setOnClickListener(v -> {
-                ReplyList item = replyLists.get(position);
-                int likeCount;
-                Animation mAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.scale_heart);
-                mAnim.setInterpolator(context.getApplicationContext(), android.R.anim.accelerate_interpolator);
-                v.startAnimation(mAnim);
-                if (!item.isHeart()) {
-                    likeBtn.setSelected(true);
-                    item.setHeart(true);
-                    item.setLike(item.getLike() + 1);
-                    likeCount = item.getLike();
-                    if (likeCount != 0) {
-                        replyLikeCount.setVisibility(View.VISIBLE);
-
-                        replyLikeCount.setText(R.string.title_reply_like);
-                        replyLikeCount.append(likeCount + "개");
-                    }
-                } else {
-                    likeBtn.setSelected(false);
-                    item.setHeart(false);
-                    item.setLike(item.getLike() - 1);
-                    likeCount = item.getLike();
-                    if (likeCount == 0) replyLikeCount.setVisibility(View.GONE);
-                    else {
-                        replyLikeCount.setVisibility(View.VISIBLE);
-                        replyLikeCount.setText(R.string.title_reply_like);
-                        replyLikeCount.append(likeCount + "개");
-                    }
-                }
-            });
+            likeBtn.setOnClickListener(v -> { animationListener(mAnim, likeBtn, position, replyLikeCount); });
         } else {
             likeBtn.setEnabled(false);
             replyLikeCount.setTextColor(context.getResources().getColor(R.color.grey_300));
         }
     }
 
+    /**
+     * 댓글 홀더
+     **/
     static class AHolder extends RecyclerView.ViewHolder {
 
         ImageView userImage;
@@ -188,6 +238,9 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    /**
+     * 대댓글 홀더
+     **/
     static class BHolder extends RecyclerView.ViewHolder {
 
         ImageView userImage;
