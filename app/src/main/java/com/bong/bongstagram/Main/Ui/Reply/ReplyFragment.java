@@ -267,7 +267,6 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
         } else {
             replyToMethod(position);
         }
-
         replyAdapter = new ReplyAdapter(getContext(), replyLists, this);
         recyclerView.setAdapter(replyAdapter);
         replyAdapter.notifyDataSetChanged();
