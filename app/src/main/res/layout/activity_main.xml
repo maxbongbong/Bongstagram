@@ -1,5 +1,4 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
@@ -12,26 +11,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="center_vertical"
             app:titleTextColor="@color/toolbar_title">
+
             <FrameLayout
+                android:id="@+id/main_frame"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/main_frame">
+                android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/logo_image"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/text_logo"
                     tools:ignore="ContentDescription" />
+
                 <LinearLayout
                     android:id="@+id/search_group"
                     android:layout_width="350dp"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:id="@+id/search_image"
                         android:layout_width="30dp"
@@ -47,15 +51,16 @@
                         android:hint="@string/title_search_desc" />
                 </LinearLayout>
             </FrameLayout>
+
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textColor="@color/overlay_dark_80"
-                android:textSize="20sp"
                 android:ellipsize="end"
-                android:maxLines="1" />
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/overlay_dark_80"
+                android:textSize="20sp" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -64,18 +69,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/contentFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:scrollbars="none"
             android:scrollingCache="true"
             android:text="@string/contentFrame"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:layout_editor_absoluteX="0dp"
-            android:orientation="vertical" />
+            tools:layout_editor_absoluteX="0dp" />
 
     </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"

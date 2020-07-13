@@ -1,6 +1,7 @@
 package com.bong.bongstagram.Main.Ui.Gallery;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -110,7 +111,7 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode != getActivity().RESULT_OK) {
+        if(resultCode != Activity.RESULT_OK) {
             Toast.makeText(getContext(), "취소 되었습니다.", Toast.LENGTH_SHORT).show();
             if (tempFile != null) {
                 if (tempFile.exists()) {
@@ -128,20 +129,16 @@ public class GalleryFragment extends Fragment {
             }
             return;
         }
-        Fragment localFragment = new LocalFragment();
         switch (requestCode) {
             case PICK_FROM_ALBUM:
                 sendPicture(data.getData());
-                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
                 break;
             case PICK_FORM_CAMERA:
                 getPictureForPhoto();
-                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
                 break;
             default:
                 break;
         }
-
     }
 
 //    private ArrayList<String> getPathOfAllImages(){
@@ -176,14 +173,14 @@ public class GalleryFragment extends Fragment {
 
     private void sendPicture(Uri imgUri){
         String imagePath = getRealPathFromURI(imgUri);
-        ExifInterface exif = null;
+        ExifInterface exif;
         try{
             exif = new ExifInterface(imagePath);
-            InputStream in = getContext().getContentResolver().openInputStream(imgUri);
-            Bitmap img = BitmapFactory.decodeStream(in);
+            InputStream is = getContext().getContentResolver().openInputStream(imgUri);
+            Bitmap img = BitmapFactory.decodeStream(is);
             int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             int exifDegree = exifOrientationToDegrees(exifOrientation);
-            in.close();
+            is.close();
             ((ImageView)getView().findViewById(R.id.iv_result)).setImageBitmap(rotate(img, exifDegree));
         }catch (Exception e){
             e.printStackTrace();
@@ -208,7 +205,6 @@ public class GalleryFragment extends Fragment {
             if (isPermission) takePhoto();
             else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
         });
-
     }
 
     private void getPictureForPhoto(){
@@ -322,10 +318,10 @@ public class GalleryFragment extends Fragment {
     }
 
     //사진의 절대경로 구하기
-    private String getRealPathFromURI(Uri conentUri){
+    private String getRealPathFromURI(Uri contentUri){
         int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContext().getContentResolver().query(conentUri, proj, null, null, null);
+        Cursor cursor = getContext().getContentResolver().query(contentUri, proj, null, null, null);
         if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }

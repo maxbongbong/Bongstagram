@@ -82,6 +82,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_marginEnd="25dp"
                     android:background="@drawable/circlebackground"
+                    android:id="@+id/Profile"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
 

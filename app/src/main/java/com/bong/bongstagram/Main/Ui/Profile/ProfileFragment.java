@@ -3,9 +3,13 @@ package com.bong.bongstagram.Main.Ui.Profile;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,8 +35,11 @@ import com.bong.bongstagram.Main.Model.MovieList;
 import com.bong.bongstagram.Main.Ui.CustomView.CustomProfileCorrection;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     private LinearLayout gridOn;
@@ -41,7 +48,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerView;
     private Fragment profileModifyFragment;
     private TextView tv1, tv2, tv3, tv4;
-    private String Name, Username, Website, Bio;
+    private CircleImageView ProfileImage;
     private Context context;
     private View correction;
 
@@ -67,6 +74,7 @@ public class ProfileFragment extends Fragment {
         tv2 = view.findViewById(R.id.profile_Toolbar_Title);
         tv3 = view.findViewById(R.id.profile_Website);
         tv4 = view.findViewById(R.id.profile_Bio);
+        ProfileImage = view.findViewById(R.id.Profile);
 
         recyclerView = view.findViewById(R.id.profile_recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -99,9 +107,14 @@ public class ProfileFragment extends Fragment {
         touchListenerMethod(promotion, promotionBtn);
         touchListenerMethod(insite, insiteBtn);
 
-        profileModify();
+        getSharedPreferences();
 
-        connectURL();
+        tv3.setOnClickListener(v -> {
+            connectURL();
+            if (connectURL().resolveActivity(context.getPackageManager()) != null) {
+                startActivity(connectURL());
+            }
+        });
 
         gridOn.setOnClickListener(v -> {
             gridView.setVisibility(View.VISIBLE);
@@ -122,25 +135,49 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void connectURL() {
-        if (tv3 != null) {
-            tv3.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tv3.getText().toString()));
-                startActivity(intent);
-            });
+    private void getSharedPreferences() {
+        String sfName = "test";
+        SharedPreferences sf = context.getSharedPreferences(sfName, Context.MODE_PRIVATE);
+
+        String Profile = sf.getString("Profile", null);
+        String Name = sf.getString("Name", null);
+        String Username = sf.getString("Username", null);
+        String Website = sf.getString("Website", null);
+        String Bio = sf.getString("Bio", null);
+
+        Log.e("image", "imagePath = " + Profile);
+
+        if (Profile != null) {
+            Glide.with(context).load(Profile).into(ProfileImage);
+        } else {
+            ProfileImage.setBackground(context.getDrawable(R.drawable.circlebackground));
+//            ProfileImage.setImageDrawable(context.getDrawable(R.mipmap.test));
+            Glide.with(context).load(context.getDrawable(R.mipmap.test)).into(ProfileImage);
         }
+        textViewCheck(tv1, Name);
+        textViewCheck(tv2, Username);
+        textViewCheck(tv3, Website);
+        textViewCheck(tv4, Bio);
+        Log.e("data", "Name = " + Name + ", Username = " + Username + ", Website = " + Website + ", Bio = " + Bio);
     }
 
-    private void profileModify() {
-        if (getArguments() != null) {
-            profileBundle();
-            textViewCheck(tv1, Name);
-            textViewCheck(tv2, Username);
-            textViewCheck(tv3, Website);
-            textViewCheck(tv4, Bio);
+    @SuppressLint("CommitPrefEdits")
+    private Intent connectURL() {
+        String url = tv3.getText().toString();
+        String sfName = "test";
+        String https = "https://";
+        Intent intent;
+        Log.e("boolean", "test = " + url.startsWith(https));
+        if (!url.startsWith("https://") && !url.startsWith("http://")) {
+            url = https + url;
+            SharedPreferences sf = context.getSharedPreferences(sfName, Context.MODE_PRIVATE);
+            sf.edit().putString("Website", url).apply();
+            Log.e("url", "url = " + sf.getString("Website", null));
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         } else {
-            Log.e("null", "null");
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         }
+        return intent;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -173,18 +210,6 @@ public class ProfileFragment extends Fragment {
             textView.append(str);
             textView.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void profileBundle() {
-        Name = getArguments().getString("Name");
-        Username = getArguments().getString("Username");
-        Website = getArguments().getString("Website");
-        Bio = getArguments().getString("Bio");
-
-        Log.e("fragment", "Name = " + Name);
-        Log.e("fragment", "Name = " + Username);
-        Log.e("fragment", "Name = " + Website);
-        Log.e("fragment", "Name = " + Bio);
     }
 
     @Override

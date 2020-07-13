@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
                 edittext.setVisibility(View.GONE);
                 break;
             case search:
+                getSupportActionBar().show();
                 mainFrame.setVisibility(View.VISIBLE);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 logo.setVisibility(View.GONE);
@@ -171,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
 
     public void changeFragment(Type type, Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
+//        getSupportFragmentManager().popBackStack(String.valueOf(fragment), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_right_left, R.anim.fragment_close_exit);
         if (type.ordinal() <= 1) {
@@ -210,49 +212,41 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
         switch (type.ordinal()){
             case 1:
                 HomeFragment fragmentHome = new HomeFragment();
-                test(fragmentHome);
+                changeFragment(type, fragmentHome);
                 break;
             case 2:
                 SearchFragment fragmentSearch = new SearchFragment();
-                test(fragmentSearch);
+                changeFragment(type, fragmentSearch);
                 break;
             case 3:
                 GalleryFragment fragmentGallery = new GalleryFragment();
-                test(fragmentGallery);
+                changeFragment(type, fragmentGallery);
                 break;
             case 4:
                 ActivityFragment fragmentActivity = new ActivityFragment();
-                test(fragmentActivity);
+                changeFragment(type, fragmentActivity);
                 break;
             case 5:
                 ProfileFragment fragmentProfile = new ProfileFragment();
-                test(fragmentProfile);
+                changeFragment(type, fragmentProfile);
                 break;
             case 6:
                 LocalFragment localFragment = new LocalFragment();
-                test(localFragment);
+                changeFragment(type, localFragment);
                 break;
             case 7:
                 GoogleMapFragment googleMapFragment = new GoogleMapFragment();
-                test(googleMapFragment);
+                changeFragment(type, googleMapFragment);
                 break;
             case 8:
                 ReplyFragment replyFragment = new ReplyFragment();
-                test(replyFragment);
+                changeFragment(type, replyFragment);
                 break;
             case 10:
 //                TestFragment testFragment = new TestFragment();
 //                test(testFragment);
                 break;
         }
-    }
-
-    private void test(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.contentFrame, fragment).commit();
     }
 }
 

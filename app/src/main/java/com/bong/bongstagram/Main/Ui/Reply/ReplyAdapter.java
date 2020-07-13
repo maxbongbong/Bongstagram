@@ -33,6 +33,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public interface OnItemClickListener {
         void onItemSelected(View v, int position);
+
         void onLayOutSelected(View v, int position, SparseBooleanArray mSelectedItems, boolean setEnabled);
     }
 
@@ -72,15 +73,14 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
         if (holder instanceof AHolder) {
             userName(((AHolder) holder).replyName, position);
             toggleTextView(((AHolder) holder).replyShortText, ((AHolder) holder).replyLongText, position);
-            likeMethod(((AHolder) holder).likeBtn, position, ((AHolder) holder).replyLikeCount);
+            likeMethod(((AHolder) holder).likeBtn, position, ((AHolder) holder).replyLikeCount, holder);
         } else {
             userName(((BHolder) holder).replyName, position);
             toggleTextView(((BHolder) holder).replyShortText, ((BHolder) holder).replyLongText, position);
-            likeMethod(((BHolder) holder).likeBtn, position, ((BHolder) holder).replyLikeCount);
+            likeMethod(((BHolder) holder).likeBtn, position, ((BHolder) holder).replyLikeCount, holder);
         }
 
         TextView replyToTextView = holder.itemView.findViewById(R.id.reply_To);
@@ -96,6 +96,38 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else {
             replyToTextView.setEnabled(false);
             replyToTextView.setTextColor(context.getResources().getColor(R.color.grey_300));
+        }
+    }
+
+    /**
+     * 좋아요 버튼 메소드
+     **/
+    private void likeMethod(ImageView likeBtn, int position, TextView replyLikeCount, RecyclerView.ViewHolder holder) {
+        ReplyList item = replyLists.get(position);
+        likeBtn.setSelected(item.getHeart());
+
+        if (item.getHeart()) {
+            replyLikeCount.setVisibility(View.VISIBLE);
+            replyLikeCount.setText(R.string.title_reply_like);
+            replyLikeCount.append(item.getLike() + "개");
+        } else {
+            replyLikeCount.setVisibility(View.GONE);
+        }
+
+        if (setEnabled) {
+            Animation mAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.scale_heart);
+            mAnim.setInterpolator(context.getApplicationContext(), android.R.anim.accelerate_interpolator);
+            replyLikeCount.setTextColor(context.getResources().getColor(R.color.grey_400));
+            likeBtn.setEnabled(true);
+            likeBtn.setOnClickListener(v -> {
+                boolean heart = replyLists.get(holder.getAdapterPosition()).getHeart();
+                likeBtn.setSelected(!heart);
+                animationListener(mAnim, likeBtn, position);
+            });
+
+        } else {
+            likeBtn.setEnabled(false);
+            replyLikeCount.setTextColor(context.getResources().getColor(R.color.grey_300));
         }
     }
 
@@ -141,15 +173,16 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     /**
      * 애니메이션 클릭 메소드
      **/
-    private void animationListener(Animation mAnim, ImageView likeBtn, int position, TextView replyLikeCount) {
+    private void animationListener(Animation mAnim, ImageView likeBtn, int position) {
         mAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                likeCount(position, likeBtn, replyLikeCount);
+
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                likeCount(position, likeBtn);
             }
 
             @Override
@@ -163,51 +196,18 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     /**
      * 좋아요 개수 카운트 메소드
      **/
-    private void likeCount(int position, ImageView likeBtn, TextView replyLikeCount){
+    private void likeCount(int position, ImageView likeBtn) {
         ReplyList item = replyLists.get(position);
-        Log.e("position", "position = " + position);
-        int likeCount;
         if (!item.getHeart()) {
             likeBtn.setSelected(true);
             item.setHeart(true);
             item.setLike(item.getLike() + 1);
-            likeCount = item.getLike();
-            if (likeCount != 0) {
-                replyLikeCount.setVisibility(View.VISIBLE);
-                replyLikeCount.setText(R.string.title_reply_like);
-                replyLikeCount.append(likeCount + "개");
-            }
         } else {
             likeBtn.setSelected(false);
             item.setHeart(false);
             item.setLike(item.getLike() - 1);
-            likeCount = item.getLike();
-            if (likeCount == 0) replyLikeCount.setVisibility(View.GONE);
-            else {
-                replyLikeCount.setVisibility(View.VISIBLE);
-                replyLikeCount.setText(R.string.title_reply_like);
-                replyLikeCount.append(likeCount + "개");
-            }
         }
-//        notifyItemChanged(position);
-    }
-
-    /**
-     * 좋아요 버튼 메소드
-     **/
-    private void likeMethod(ImageView likeBtn, int position, TextView replyLikeCount) {
-        likeBtn.setSelected(replyLists.get(position).getHeart());
-        Log.e("likeBtn", "likeBtn = " + replyLists.get(position).getHeart());
-        if (setEnabled) {
-            Animation mAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.scale_heart);
-            mAnim.setInterpolator(context.getApplicationContext(), android.R.anim.accelerate_interpolator);
-            replyLikeCount.setTextColor(context.getResources().getColor(R.color.grey_400));
-            likeBtn.setEnabled(true);
-            likeBtn.setOnClickListener(v -> { animationListener(mAnim, likeBtn, position, replyLikeCount); });
-        } else {
-            likeBtn.setEnabled(false);
-            replyLikeCount.setTextColor(context.getResources().getColor(R.color.grey_300));
-        }
+        notifyItemChanged(position);
     }
 
     /**
