@@ -13,7 +13,8 @@
         app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/reply_Close"
@@ -153,10 +154,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/reply_Image"
-                android:layout_width="50dp"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical|center"
                 android:layout_marginStart="5dp"
+                android:layout_weight="1"
                 android:paddingStart="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="5dp"
@@ -167,7 +169,8 @@
 
             <EditText
                 android:id="@+id/reply_EditText"
-                android:layout_width="280dp"
+                android:layout_width="0dp"
+                android:layout_weight="7"
                 android:layout_height="?actionBarSize"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
@@ -183,7 +186,8 @@
 
             <Button
                 android:id="@+id/reply_Btn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="?actionBarSize"
                 android:layout_gravity="center_vertical|center"
                 android:backgroundTint="@color/colorDefault"

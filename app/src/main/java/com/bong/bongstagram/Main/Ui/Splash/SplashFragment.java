@@ -2,6 +2,7 @@ package com.bong.bongstagram.Main.Ui.Splash;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,7 @@ import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 
 public class SplashFragment extends Fragment {
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    Fragment fragment = this;
 
     @Nullable
     @Override
@@ -26,6 +24,7 @@ public class SplashFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
         ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.splash);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.splash);
+        Log.e("스플", "스플");
         return view;
     }
 

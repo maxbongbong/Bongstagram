@@ -8,7 +8,7 @@
     <Button
         android:id="@+id/custom_btn"
         android:layout_width="230dp"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:backgroundTint="#00ff0000"
         android:stateListAnimator="@null"
         android:text="@string/title_see"

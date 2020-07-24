@@ -56,7 +56,7 @@ public class GalleryFragment extends Fragment {
     private String[] PERMISSIONS = {
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
     private boolean hasPermission(Context context, String... permissions){
@@ -75,7 +75,7 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         tedPermission();
 
-        ((MainActivity) Objects.requireNonNull(getActivity())).bottomNavigation(MainActivity.Type.gallery);
+        ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.gallery);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.gallery);
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 

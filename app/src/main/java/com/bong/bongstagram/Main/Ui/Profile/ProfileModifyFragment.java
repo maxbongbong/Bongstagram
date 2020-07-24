@@ -36,14 +36,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bong.bongstagram.Main.Ui.Gallery.GalleryFragment;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -53,7 +57,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileModifyFragment extends Fragment {
 
-    private TextView profileImageChange;
+    private TextView profileImageChange, permission;
     private EditText Name, Username, Website, Bio;
     private ImageView completeBtn, closeBtn;
     private Fragment profileFragment;
@@ -63,14 +67,88 @@ public class ProfileModifyFragment extends Fragment {
     private Bitmap bitmap;
     private ExifInterface exif;
     private String imagePath;
+    private boolean isPermission;
     private SharedPreferences.Editor editor;
+    private static final int PRICK_FROM_ALBUM = 1;
+
+    private String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    private boolean hasPermission(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void ted() {
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                isPermission = true;
+                Toast.makeText(getContext(), "권한 허용", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                isPermission = false;
+                Toast.makeText(getContext(), "권한 거부", Toast.LENGTH_SHORT).show();
+            }
+        };
+        TedPermission.with(getContext())
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check();
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_modify, container, false);
         ((MainActivity) getActivity()).bottomNavigation(MainActivity.Type.modify);
+        ted();
+
         return view;
+    }
+
+    private void tedPermission() {
+        if (hasPermission(getContext(), PERMISSIONS) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            permission.setVisibility(View.GONE);
+            profileImageChange.setVisibility(View.VISIBLE);
+        } else {
+            profileImageChange.setVisibility(View.GONE);
+            permission.setVisibility(View.VISIBLE);
+            permission.setOnClickListener(v -> {
+                PermissionListener p = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        permission.setVisibility(View.GONE);
+                        profileImageChange.setVisibility(View.VISIBLE);
+                        isPermission = true;
+                    }
+
+                    @Override
+                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        profileImageChange.setVisibility(View.GONE);
+                        permission.setVisibility(View.VISIBLE);
+                        isPermission = false;
+                    }
+                };
+                TedPermission.with(getContext())
+                        .setPermissionListener(p)
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .check();
+            });
+        }
+//        return isPermission;
     }
 
     @Override
@@ -87,32 +165,28 @@ public class ProfileModifyFragment extends Fragment {
         completeBtn = view.findViewById(R.id.profile_Complete);
         closeBtn = view.findViewById(R.id.profile_Close);
         profileImage = view.findViewById(R.id.profile_image);
+        permission = view.findViewById(R.id.permission);
         profileFragment = new ProfileFragment();
 
-        profileEditText(Website);
+        if (!isPermission) {
+            profileImageChange.setVisibility(View.GONE);
+            permission.setVisibility(View.VISIBLE);
+            tedPermission();
+        } else {
+            permission.setVisibility(View.GONE);
+            profileImageChange.setVisibility(View.VISIBLE);
+        }
 
         getSharedPreferences();
 
-        checkSelfPermission();
-
-        profileImageChange.setOnClickListener(v -> getImageFromAlbum());
+        profileImageChange.setOnClickListener(v -> {
+            if (isPermission) getImageFromAlbum();
+            else Toast.makeText(context, getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+        });
 
         completeBtn.setOnClickListener(v -> checkData());
 
-        closeBtn.setOnClickListener(v -> ((MainActivity) getActivity()).changeFragment(MainActivity.Type.profile, profileFragment));
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
-            int length = permissions.length;
-            for (int i = 0; i < length; i++) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("권한 허용", "권한 동의");
-                }
-            }
-        }
+        closeBtn.setOnClickListener(v -> ((MainActivity) getActivity()). changeFragment(MainActivity.Type.profile, profileFragment));
     }
 
     /**
@@ -121,7 +195,7 @@ public class ProfileModifyFragment extends Fragment {
     private void getImageFromAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, 101);
+        startActivityForResult(intent, PRICK_FROM_ALBUM);
     }
 
     /**
@@ -197,11 +271,10 @@ public class ProfileModifyFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
+            Toast.makeText(context, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == PRICK_FROM_ALBUM) {
             sendPicture(data.getData());
-        } else if (requestCode == 101 && resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(context, "취소 되었습니다", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -209,9 +282,10 @@ public class ProfileModifyFragment extends Fragment {
      * Website의 Text에 따라 다른 동작 하는 Method
      */
     private void checkData() {
+        profileEditText(Website);
         if (checkURL(Website.getText().toString())) {
             savePreferences();
-        } else if (!checkURL(Website.getText().toString()) && Website.getText().toString().equals("null")) {
+        } else if (Website.getText().length() == 0) {
             savePreferences();
         } else {
             Toast.makeText(context.getApplicationContext(), "올바른 URL을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -237,7 +311,6 @@ public class ProfileModifyFragment extends Fragment {
 //        Log.e("modify", "UserName = " + UsernameData);
 //        Log.e("modify", "Website = " + WebsiteData);
 //        Log.e("modify", "Bio = " + BioData);
-
         if (editor.commit()) {
             Log.e("저장", "저장 성공");
             ((MainActivity) getActivity()).changeFragment(MainActivity.Type.profile, profileFragment);
@@ -254,20 +327,27 @@ public class ProfileModifyFragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Text가 바뀌기 전 동작할 코드
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //Text가 바뀌고 동작할 코드
+                //Text가 변경될때 마다 호출
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                checkURL(Website.getText().toString());
+                //Text가 변경된 이후에 호출
+                if (s != null) {
+                    checkURL(Website.getText().toString());
+                } else {
+
+                }
+
             }
         });
     }
+
 
     /**
      * URL 형식 체크
@@ -296,6 +376,7 @@ public class ProfileModifyFragment extends Fragment {
      * 권한 체크
      */
     private void checkSelfPermission() {
+        Log.e("권한체크", "권한체크");
         String temp = " ";
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             temp += Manifest.permission.READ_EXTERNAL_STORAGE + " ";
@@ -304,10 +385,10 @@ public class ProfileModifyFragment extends Fragment {
             temp += Manifest.permission.WRITE_EXTERNAL_STORAGE + " ";
         }
 
-        if (TextUtils.isEmpty(temp)) {
-            Toast.makeText(getContext(), "권한을 모두 허용", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(temp) == false) {
+            ActivityCompat.requestPermissions(getActivity(), temp.trim().split(""), 1);
         } else {
-            ActivityCompat.requestPermissions(getActivity(), temp.trim().split(" "), 1);
+            Toast.makeText(getContext(), "권한을 모두 허용", Toast.LENGTH_SHORT).show();
         }
     }
 }

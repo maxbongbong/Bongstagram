@@ -38,7 +38,7 @@ public class SearchFragment extends Fragment {
 
         ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.search);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.search);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
 
         recyclerView = view.findViewById(R.id.recycler_view);
 

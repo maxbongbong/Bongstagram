@@ -21,29 +21,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/reply_Close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/baseline_keyboard_arrow_down_24" />
-
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/reply_Trash"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="5dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/baseline_view_headline_24" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <View
@@ -217,7 +198,7 @@
 
                     <com.bong.bongstagram.Main.Ui.CustomView.CustomProfileCorrection
                         android:id="@+id/profile_Custom_Correction"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="5dp"
@@ -228,7 +209,7 @@
 
                     <com.bong.bongstagram.Main.Ui.CustomView.CustomProfilePromotion
                         android:id="@+id/profile_Custom_Promotion"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
@@ -239,7 +220,7 @@
 
                     <com.bong.bongstagram.Main.Ui.CustomView.CustomProfileInsite
                         android:id="@+id/profile_Custom_Insite"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="10dp"
@@ -254,7 +235,6 @@
                 android:id="@+id/linearLayout12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
 
@@ -333,8 +313,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/profile_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="?attr/actionBarSize" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

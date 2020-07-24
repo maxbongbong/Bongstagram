@@ -123,7 +123,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         ((OnApplySelectedListener)activity).onCategoryApplySelected(address);
         ((MainActivity) getActivity()).bottomNavigation(MainActivity.Type.google);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.google);
-        setHasOptionsMenu(true);
 
         TextView btn = view.findViewById(R.id.google_Btn);
         btn.setOnClickListener(v -> {
@@ -306,11 +305,5 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
         mMap.moveCamera(cameraUpdate);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_air, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }

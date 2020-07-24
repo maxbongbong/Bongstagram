@@ -56,7 +56,6 @@
                 android:layout_marginEnd="5dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/baseline_done_24" />
-
         </androidx.appcompat.widget.Toolbar>
         <FrameLayout
             android:layout_width="match_parent"
@@ -68,14 +67,12 @@
                 android:paddingBottom="3dp"
                 android:background="@drawable/toolbar_dropshadow" />
         </FrameLayout>
-
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-
         app:layout_constraintTop_toBottomOf="@+id/linearLayout16">
 
         <LinearLayout
@@ -103,16 +100,34 @@
                     android:layout_marginTop="15dp"
                     android:scaleType="centerCrop" />
 
-                <TextView
-                    android:id="@+id/profile_ImageChange"
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/title_profile_ImageChange"
-                    android:textColor="@color/light_blue_600"
-                    android:textSize="17sp" />
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/permission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/permission"
+                        android:textColor="@color/light_blue_600"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/profile_ImageChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/title_profile_ImageChange"
+                        android:textColor="@color/light_blue_600"
+                        android:textSize="17sp" />
+                </FrameLayout>
+
 
                 <TextView
                     android:layout_width="match_parent"

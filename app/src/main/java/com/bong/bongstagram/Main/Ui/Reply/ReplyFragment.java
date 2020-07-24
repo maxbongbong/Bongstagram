@@ -156,6 +156,7 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
     @Override
     public void onLayOutSelected(View v, int position, SparseBooleanArray mSelectedItems, boolean setEnabled) {
         replyAdapter.notifyDataSetChanged();
+
         toggleItemSelected(position, mSelectedItems);
         countItemsTitle(mSelectedItems);
         setEnabledBtn(mSelectedItems);
@@ -245,7 +246,7 @@ public class ReplyFragment extends Fragment implements ReplyAdapter.OnItemClickL
      */
     private void toolbarToggle(SparseBooleanArray mSelectedItems) {
         if (mSelectedItems.size() == 0) {
-            replyToolbar.setVisibility(View.INVISIBLE);
+            replyToolbar.setVisibility(View.GONE);
             replyEditTextLayout.setVisibility(View.VISIBLE);
             ((MainActivity) getActivity()).Toolbar(MainActivity.Type.reply);
         } else {

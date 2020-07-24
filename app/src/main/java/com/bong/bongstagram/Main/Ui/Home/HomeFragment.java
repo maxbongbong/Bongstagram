@@ -2,6 +2,7 @@ package com.bong.bongstagram.Main.Ui.Home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +27,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
         ((MainActivity) getActivity()).bottomNavigation(MainActivity.Type.home);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.home);
-        setHasOptionsMenu(true);
+        Log.e("홈", "홈");
 
         return view;
     }
@@ -45,16 +46,5 @@ public class HomeFragment extends Fragment {
         HomeAdapter homeAdapter = new HomeAdapter(context, new Movie().getItems());
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_air, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }
