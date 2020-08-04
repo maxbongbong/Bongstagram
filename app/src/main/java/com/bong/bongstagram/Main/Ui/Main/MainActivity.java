@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
     private Toolbar toolbar;
     public FragmentManager fm = getSupportFragmentManager();
     private String fragmentTag = fm.getClass().getSimpleName();
-    public static ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,15 +168,10 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
         } else {
             fm.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             FragmentTransaction transaction = fm.beginTransaction();
-            Log.e("", "Name = " + fragmentTag);
+//            Log.e("", "Name = " + fragmentTag);
             transaction.replace(R.id.contentFrame, fragment);
             transaction.addToBackStack(fragmentTag);
             transaction.commit();
-        }
-        if (fm.getBackStackEntryCount() != 0) {
-            for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
-                Log.e("", "stack = " + fm.getBackStackEntryAt(i).getName() + ", 총 : " + fm.getBackStackEntryCount());
-            }
         }
     }
 
@@ -188,12 +182,6 @@ public class MainActivity extends AppCompatActivity implements GoogleMapFragment
         transaction.replace(R.id.contentFrame, fragment);
         transaction.addToBackStack(fragmentTag);
         transaction.commit();
-
-        if (fm.getBackStackEntryCount() != 0) {
-            for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
-                Log.e("", "stack = " + fm.getBackStackEntryAt(i).getName() + ", 총 : " + fm.getBackStackEntryCount());
-            }
-        }
     }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {

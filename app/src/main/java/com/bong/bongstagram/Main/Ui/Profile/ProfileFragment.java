@@ -145,9 +145,8 @@ public class ProfileFragment extends Fragment {
         String Website = sf.getString("Website", null);
         String Bio = sf.getString("Bio", null);
 
-//        Log.e("image", "imagePath = " + Profile);
-
         if (Profile != null) {
+            Log.e("P","profile = " + Profile);
             Glide.with(context).load(Profile).into(ProfileImage);
         } else {
             ProfileImage.setBackground(context.getDrawable(R.drawable.circlebackground));
@@ -157,7 +156,6 @@ public class ProfileFragment extends Fragment {
         textViewCheck(tv2, Username);
         textViewCheck(tv3, Website);
         textViewCheck(tv4, Bio);
-//        Log.e("data", "Name = " + Name + ", Username = " + Username + ", Website = " + Website + ", Bio = " + Bio);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -203,8 +201,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void textViewCheck(TextView textView, String str) {
-        if (str == null || str.equals("")) {
+        if (str == null || str.equals("") && textView != tv2) {
             textView.setVisibility(View.GONE);
+        } else if(textView == tv2 && str.equals("") || str == null){
+            textView.setText(R.string.title_profile);
         } else {
             textView.append(str);
             textView.setVisibility(View.VISIBLE);

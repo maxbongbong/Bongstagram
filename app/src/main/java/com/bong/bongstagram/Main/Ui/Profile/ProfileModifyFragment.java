@@ -181,12 +181,13 @@ public class ProfileModifyFragment extends Fragment {
 
         profileImageChange.setOnClickListener(v -> {
             if (isPermission) getImageFromAlbum();
-            else Toast.makeText(context, getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(context, getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
         });
 
         completeBtn.setOnClickListener(v -> checkData());
 
-        closeBtn.setOnClickListener(v -> ((MainActivity) getActivity()). changeFragment(MainActivity.Type.profile, profileFragment));
+        closeBtn.setOnClickListener(v -> ((MainActivity) getActivity()).changeFragment(MainActivity.Type.profile, profileFragment));
     }
 
     /**
@@ -218,27 +219,27 @@ public class ProfileModifyFragment extends Fragment {
         String sfName = "test";
         SharedPreferences sf = context.getSharedPreferences(sfName, Context.MODE_PRIVATE);
 
-        String profileData = sf.getString("Profile", null);
+        imagePath = sf.getString("Profile", null);
         String nameData = sf.getString("Name", null);
         String usernameData = sf.getString("Username", null);
         String WebsiteData = sf.getString("Website", null);
         String BioData = sf.getString("Bio", null);
 
-        if (profileData != null || nameData != null || usernameData != null || WebsiteData != null || Bio != null) {
-            if (profileData != null) {
-                Glide.with(context).load(profileData).into(profileImage);
-            } else {
-                profileImage.setBackground(context.getDrawable(R.drawable.circlebackground));
-                profileImage.setImageDrawable(context.getDrawable(R.mipmap.test));
-            }
-            Name.setText(nameData);
-            Username.setText(usernameData);
-            Website.setText(WebsiteData);
-            Bio.setText(BioData);
+//        if (profileData != null || nameData != null || usernameData != null || WebsiteData != null || Bio != null) {
+        if (imagePath != null) {
+            Glide.with(context).load(imagePath).into(profileImage);
         } else {
-            Log.e("null", "null");
+            profileImage.setBackground(context.getDrawable(R.drawable.circlebackground));
+            profileImage.setImageDrawable(context.getDrawable(R.mipmap.test));
         }
-//        Log.e("data",  "Profile = " + profileData + ", Name = " + nameData + ", Username = " + usernameData + ", Website = " + WebsiteData + ", Bio = " + BioData);
+        Name.setText(nameData);
+        Username.setText(usernameData);
+        Website.setText(WebsiteData);
+        Bio.setText(BioData);
+//        } else {
+//            Log.e("null", "null");
+//        }
+//        Log.e("data", "Profile = " + imagePath + ", Name = " + nameData + ", Username = " + usernameData + ", Website = " + WebsiteData + ", Bio = " + BioData);
     }
 
     /**

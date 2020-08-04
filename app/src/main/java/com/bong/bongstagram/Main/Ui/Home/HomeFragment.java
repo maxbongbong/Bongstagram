@@ -27,7 +27,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
         ((MainActivity) getActivity()).bottomNavigation(MainActivity.Type.home);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.home);
-        Log.e("홈", "홈");
 
         return view;
     }

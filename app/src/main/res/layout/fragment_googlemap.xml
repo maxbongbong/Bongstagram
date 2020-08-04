@@ -48,13 +48,13 @@
                         android:maxLines="5"
                         android:layout_gravity="center_vertical|center"
                         android:gravity="center"
-                        android:text="asdfdasfadsf"
                         android:textColor="@color/grey_text3" />
 
                     <com.bong.bongstagram.Main.Ui.CustomView.CustomBtn
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:id="@+id/local_detail"
+                        android:layout_gravity="center_vertical|center"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/information_btn" />
                 </LinearLayout>

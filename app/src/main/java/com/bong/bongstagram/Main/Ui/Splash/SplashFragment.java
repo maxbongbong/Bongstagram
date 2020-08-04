@@ -24,7 +24,7 @@ public class SplashFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
         ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.splash);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.splash);
-        Log.e("스플", "스플");
+
         return view;
     }
 

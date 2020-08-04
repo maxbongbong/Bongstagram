@@ -44,6 +44,7 @@
     <string name="title_profile_modify_Username">Username</string>
     <string name="title_profile_modify_Website">Website</string>
     <string name="title_profile_modify_Bio">Bio</string>
+    <string name="title_local_detail">클릭</string>
     <!-- Icon -->
     <string name="icon_camera">Camera</string>
     <string name="icon_air">Air</string>

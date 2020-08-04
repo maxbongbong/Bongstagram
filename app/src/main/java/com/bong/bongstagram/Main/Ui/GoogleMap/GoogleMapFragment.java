@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bong.bongstagram.Main.Data.GpsTracker;
 import com.bong.bongstagram.Main.Data.Image;
+import com.bong.bongstagram.Main.Ui.CustomView.CustomBtn;
 import com.bong.bongstagram.Main.Ui.Dialog.EventDialogFragment;
+import com.bong.bongstagram.Main.Ui.Local.LocalFragment;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 import com.bumptech.glide.Glide;
@@ -106,7 +109,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         popularText = view.findViewById(R.id.popular_Text);
         recentText = view.findViewById(R.id.recent_Text);
 
-
         if (getArguments() != null) {
             String imageUrl = getArguments().getString("image");
             Glide.with(getContext())
@@ -135,6 +137,13 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
             bundle.putDouble("longitude", longitude);
             e.setArguments(bundle);
             e.show(getActivity().getSupportFragmentManager(), EventDialogFragment.TAG_EVENT_DIALOG);
+        });
+
+        Button localDetail = view.findViewById(R.id.custom_btn);
+        localDetail.setOnClickListener(v -> {
+            Log.e("click", "local");
+            Fragment localFragment = new LocalFragment();
+            ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
         });
 
         popularText = view.findViewById(R.id.popular_Text);
@@ -228,7 +237,12 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
 
     @SuppressLint("DefaultLocale")
     private String distance(){
-        address = getArguments().getString("address");
+        if(getArguments() == null){
+            address = "null";
+        } else {
+            address = getArguments().getString("address");
+        }
+
         String distanceText;
         String distanceStr;
         GpsTracker gpsTracker = new GpsTracker(getActivity());
