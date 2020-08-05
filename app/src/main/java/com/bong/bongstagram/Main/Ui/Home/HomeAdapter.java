@@ -2,10 +2,15 @@ package com.bong.bongstagram.Main.Ui.Home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -94,8 +99,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
 
         doubleTapMethod(holder, item);
 
-        holder.homeText.setText(item.getDesc());
-        holder.userName.setText(item.getTitle());
+        holder.homeText.setText(TextBold(item.getTitle()));
+        holder.homeText.append("   " + item.getDesc());
 
         heartAnimationMethod(holder.heartBtn, item);
 
@@ -204,7 +209,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
     class Holder extends RecyclerView.ViewHolder {
         ImageView imageFrame, bigHeartImage;
         CircleImageView imageProfile;
-        TextView topUserName, fullName, homeText, userName;
+        TextView topUserName, fullName, homeText;
         ImageView heartBtn, replyBtn;
 
         @SuppressLint("ClickableViewAccessibility")
@@ -216,7 +221,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
             topUserName = itemView.findViewById(R.id.topUsername);
             fullName = itemView.findViewById(R.id.fullName);
             homeText = itemView.findViewById(R.id.homeText);
-            userName = itemView.findViewById(R.id.userName);
             heartBtn = itemView.findViewById(R.id.btn_favorite);
             replyBtn = itemView.findViewById(R.id.reply_btn);
         }
@@ -254,6 +258,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
 
     public interface addressData {
         void itemAddress(String address);
+    }
+
+    private SpannableString TextBold(String text) {
+        SpannableString sb = new SpannableString(text);
+        int start = text.indexOf(text);
+        int end = start + text.length();
+        sb.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sb;
     }
 }
 
