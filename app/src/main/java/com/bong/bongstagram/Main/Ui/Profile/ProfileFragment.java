@@ -152,8 +152,13 @@ public class ProfileFragment extends Fragment {
             ProfileImage.setBackground(context.getDrawable(R.drawable.circlebackground));
             Glide.with(context).load(context.getDrawable(R.mipmap.test)).into(ProfileImage);
         }
+
+        if (Username == null || Username.equals("")) {
+            tv2.setText(R.string.title_profile);
+        } else {
+            textViewCheck(tv2, Username);
+        }
         textViewCheck(tv1, Name);
-        textViewCheck(tv2, Username);
         textViewCheck(tv3, Website);
         textViewCheck(tv4, Bio);
     }

@@ -318,6 +318,8 @@ public class ProfileModifyFragment extends Fragment {
         } else {
             Toast.makeText(context.getApplicationContext(), "오류", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     /**
