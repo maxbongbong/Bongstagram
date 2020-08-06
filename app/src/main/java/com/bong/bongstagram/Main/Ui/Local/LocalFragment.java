@@ -64,7 +64,6 @@ public class LocalFragment extends Fragment {
                     break;
                 }
             }
-
             if (check_result) {
                 //위치값 가져올수있음.
             }else{
