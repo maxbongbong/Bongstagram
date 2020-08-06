@@ -31,7 +31,10 @@
     - [Reply Adapter](#Reply-Adapter)
     - [Reply Fragment](#Reply-Fragment)
 
-## MainActivity
+## Contents
 
 - <img src="doc/demo_1_splash.jpg" width="24%"> <img src="doc/demo_2_home.jpg" width="24%"> <img src="doc/demo_3_gallery.jpg" width="24%"> <img src="doc/demo_4_activity.jpg" width="24%">
 - <img src="doc/demo_5_profile.jpg" width="24%"> <img src="doc/demo_6_map.jpg" width="24%"> <img src="doc/demo_7_reply.jpg" width="24%">
+
+## MainActivity
+
