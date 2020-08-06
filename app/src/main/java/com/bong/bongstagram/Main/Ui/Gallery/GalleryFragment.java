@@ -1,6 +1,7 @@
 package com.bong.bongstagram.Main.Ui.Gallery;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,13 +9,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class GalleryFragment extends Fragment {
 
@@ -52,13 +53,13 @@ public class GalleryFragment extends Fragment {
     private File tempFile;
     private boolean isPermission;
 
-    String[] PERMISSIONS = {
+    private String[] PERMISSIONS = {
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
-    public boolean hasPermission(Context context, String... permissions){
+    private boolean hasPermission(Context context, String... permissions){
         if (context != null && permissions != null) {
             for(String permission : permissions) {
                 if(ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
@@ -74,12 +75,12 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         tedPermission();
 
-        ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.gallery);
+        ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.gallery);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.gallery);
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         LinearLayout linearLayout = view.findViewById(R.id.linear_gallery);
-        if (hasPermission(getContext(), PERMISSIONS) == true && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (hasPermission(getContext(), PERMISSIONS) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             linearLayout.setVisibility(View.GONE);
         } else {
             linearLayout.setVisibility(View.VISIBLE);
@@ -110,7 +111,7 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode != getActivity().RESULT_OK) {
+        if(resultCode != Activity.RESULT_OK) {
             Toast.makeText(getContext(), "취소 되었습니다.", Toast.LENGTH_SHORT).show();
             if (tempFile != null) {
                 if (tempFile.exists()) {
@@ -134,13 +135,10 @@ public class GalleryFragment extends Fragment {
                 break;
             case PICK_FORM_CAMERA:
                 getPictureForPhoto();
-                Fragment localFragment = new LocalFragment();
-                ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
                 break;
             default:
                 break;
         }
-
     }
 
 //    private ArrayList<String> getPathOfAllImages(){
@@ -175,14 +173,14 @@ public class GalleryFragment extends Fragment {
 
     private void sendPicture(Uri imgUri){
         String imagePath = getRealPathFromURI(imgUri);
-        ExifInterface exif = null;
+        ExifInterface exif;
         try{
             exif = new ExifInterface(imagePath);
-            InputStream in = getContext().getContentResolver().openInputStream(imgUri);
-            Bitmap img = BitmapFactory.decodeStream(in);
+            InputStream is = getContext().getContentResolver().openInputStream(imgUri);
+            Bitmap img = BitmapFactory.decodeStream(is);
             int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             int exifDegree = exifOrientationToDegrees(exifOrientation);
-            in.close();
+            is.close();
             ((ImageView)getView().findViewById(R.id.iv_result)).setImageBitmap(rotate(img, exifDegree));
         }catch (Exception e){
             e.printStackTrace();
@@ -207,7 +205,6 @@ public class GalleryFragment extends Fragment {
             if (isPermission) takePhoto();
             else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
         });
-
     }
 
     private void getPictureForPhoto(){
@@ -321,10 +318,10 @@ public class GalleryFragment extends Fragment {
     }
 
     //사진의 절대경로 구하기
-    private String getRealPathFromURI(Uri conentUri){
+    private String getRealPathFromURI(Uri contentUri){
         int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContext().getContentResolver().query(conentUri, proj, null, null, null);
+        Cursor cursor = getContext().getContentResolver().query(contentUri, proj, null, null, null);
         if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }

@@ -9,30 +9,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
+        android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:scaleType="centerCrop"
             android:id="@+id/dummy_image1"
-            android:layout_width="134dp"
-            android:layout_height="134dp"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
             tools:ignore="ContentDescription,HardcodedText" />
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/dummy_image2"
-            android:layout_marginRight="4dp"
-            android:layout_marginLeft="4dp"
-            android:scaleType="centerCrop"
-            android:layout_width="134dp"
-            android:layout_height="134dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
             tools:ignore="ContentDescription,HardcodedText" />
         <ImageView
-            android:id="@+id/dummy_image3"
             android:scaleType="centerCrop"
-            android:layout_width="134dp"
-            android:layout_height="134dp"
-            tools:ignore="ContentDescription,HardcodedText"
-             />
+            android:id="@+id/dummy_image3"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            tools:ignore="ContentDescription,HardcodedText" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

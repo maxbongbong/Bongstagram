@@ -2,140 +2,132 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
-            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="155dp"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="104dp">
+                android:gravity="center"
+                android:paddingBottom="20dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circle_Image"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="18dp"
-                    android:src="@mipmap/ic_launcher"
-                    tools:ignore="MissingConstraints"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@mipmap/test" />
+
                 <LinearLayout
-                    android:layout_width="250dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center"
+                    android:layout_marginEnd="20dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/google_textView"
-                        android:layout_width="250dp"
+                        android:layout_width="230dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="33dp"
+                        android:maxLines="5"
+                        android:layout_gravity="center_vertical|center"
                         android:gravity="center"
                         android:textColor="@color/grey_text3" />
+
                     <com.bong.bongstagram.Main.Ui.CustomView.CustomBtn
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/local_detail"
+                        android:layout_gravity="center_vertical|center"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/information_btn" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-            <androidx.core.widget.NestedScrollView
+            <FrameLayout
+                android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
+                android:layout_height="wrap_content">
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:adjustViewBounds="true"
+                    android:transitionName="com.google.android.gms.maps.GoogleMapFragment" />
+
+                <TextView
+                    android:id="@+id/google_Btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <FrameLayout
-                        android:id="@+id/frameLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="190dp"
-                        android:foregroundGravity="bottom"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-                        <com.google.android.gms.maps.MapView
-                            android:id="@+id/map"
-                            android:layout_width="match_parent"
-                            android:layout_height="190dp"
-                            android:adjustViewBounds="true"
-                            android:transitionName="com.google.android.gms.maps.GoogleMapFragment" />
-                        <TextView
-                            android:id="@+id/google_Btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="190dp"
-                            android:background="@color/colorDefault"
-                            android:gravity="center_vertical" />
-                    </FrameLayout>
-                    <LinearLayout
-                        android:id="@+id/linearLayout5"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:adjustViewBounds="true"
-                        android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+                    android:background="@color/colorDefault"
+                    android:gravity="center_vertical" />
+            </FrameLayout>
 
-                        <TextView
-                            android:id="@+id/popular_Text"
-                            android:layout_width="206dp"
-                            android:layout_height="match_parent"
-                            android:stateListAnimator="@null"
-                            android:enabled="true"
-                            android:gravity="center_vertical|center"
-                            android:textSize="18sp"
-                            android:background="@drawable/change_btn"
-                            android:textColor="@color/text_pressed"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:text="@string/title_popular" />
-                        <TextView
-                            android:id="@+id/recent_Text"
-                            android:layout_width="206dp"
-                            android:layout_height="match_parent"
-                            android:stateListAnimator="@null"
-                            android:gravity="center_vertical|center"
-                            android:textSize="18sp"
-                            android:background="@drawable/change_btn"
-                            android:textColor="@color/text_pressed"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:text="@string/title_recent" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/google_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingBottom="50dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:adjustViewBounds="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/popular_Text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/change_btn"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical|center"
+                    android:stateListAnimator="@null"
+                    android:text="@string/title_popular"
+                    android:textColor="@color/text_pressed"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/recent_Text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/change_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical|center"
+                    android:stateListAnimator="@null"
+                    android:text="@string/title_recent"
+                    android:textColor="@color/text_pressed"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/google_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

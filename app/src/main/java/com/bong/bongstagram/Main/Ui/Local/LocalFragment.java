@@ -141,12 +141,6 @@ public class LocalFragment extends Fragment {
 
             Toast.makeText(getContext(), "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_SHORT).show();
         });
-
-        Button Google = view.findViewById(R.id.local_google_btn);
-        Google.setOnClickListener(v -> {
-            Fragment googleFragment = new GoogleMapFragment();
-            ((MainActivity)getActivity()).changeFragment(MainActivity.Type.google, googleFragment);
-        });
     }
 
     private void showDialogForLocationServiceSetting(){

@@ -6,19 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="141dp">
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/local_textview"
-            android:layout_width="match_parent"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:text="현재 내 위치 표시" />
 
         <Button
@@ -27,25 +30,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#00ff0000"
             android:stateListAnimator="@null"
-            android:text="local_btn"
+            android:text="@string/title_local_detail"
             android:textColor="@color/overlay_dark_80"
-            android:textSize="15dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="구글 맵" />
-
-        <Button
-            android:id="@+id/local_google_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#00ff0000"
-            android:stateListAnimator="@null"
-            android:text="local_google_btn"
-            android:textColor="@color/overlay_dark_80"
-            android:textSize="15dp" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:textSize="20sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

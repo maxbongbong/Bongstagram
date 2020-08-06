@@ -1,5 +1,6 @@
 package com.bong.bongstagram.Main.Ui.GoogleMap;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bong.bongstagram.Main.Data.GpsTracker;
 import com.bong.bongstagram.Main.Data.Image;
+import com.bong.bongstagram.Main.Ui.CustomView.CustomBtn;
 import com.bong.bongstagram.Main.Ui.Dialog.EventDialogFragment;
+import com.bong.bongstagram.Main.Ui.Local.LocalFragment;
 import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 import com.bumptech.glide.Glide;
@@ -39,6 +43,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -50,12 +56,12 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleAdapter googleAdapter;
     private MapView mapView = null;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private Marker currentMarker = null;
     private double latitude;
     private double longitude;
     private TextView popularText;
     private TextView recentText;
+
     public GoogleMapFragment() {}
 
     @Override
@@ -79,7 +85,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_googlemap, container, false);
-
         popularText = view.findViewById(R.id.popular_Text);
         popularText.setSelected(true);
 
@@ -95,7 +100,7 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         recyclerView = view.findViewById(R.id.google_recycler);
         recyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
 
         googleAdapter = new GoogleAdapter(context, new Image().getDummy());
@@ -103,7 +108,6 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
 
         popularText = view.findViewById(R.id.popular_Text);
         recentText = view.findViewById(R.id.recent_Text);
-
 
         if (getArguments() != null) {
             String imageUrl = getArguments().getString("image");
@@ -119,9 +123,8 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         TextView textView = view.findViewById(R.id.google_textView);
         textView.setText(distance());
         ((OnApplySelectedListener)activity).onCategoryApplySelected(address);
-        ((MainActivity) getActivity()).bottomNavi(MainActivity.Type.google);
+        ((MainActivity) getActivity()).bottomNavigation(MainActivity.Type.google);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.google);
-        setHasOptionsMenu(true);
 
         TextView btn = view.findViewById(R.id.google_Btn);
         btn.setOnClickListener(v -> {
@@ -134,6 +137,13 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
             bundle.putDouble("longitude", longitude);
             e.setArguments(bundle);
             e.show(getActivity().getSupportFragmentManager(), EventDialogFragment.TAG_EVENT_DIALOG);
+        });
+
+        Button localDetail = view.findViewById(R.id.custom_btn);
+        localDetail.setOnClickListener(v -> {
+            Log.e("click", "local");
+            Fragment localFragment = new LocalFragment();
+            ((MainActivity)getActivity()).changeFragment(MainActivity.Type.local, localFragment);
         });
 
         popularText = view.findViewById(R.id.popular_Text);
@@ -167,7 +177,7 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
@@ -225,8 +235,14 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private String distance(){
-        address = getArguments().getString("address");
+        if(getArguments() == null){
+            address = "null";
+        } else {
+            address = getArguments().getString("address");
+        }
+
         String distanceText;
         String distanceStr;
         GpsTracker gpsTracker = new GpsTracker(getActivity());
@@ -303,11 +319,5 @@ public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
         mMap.moveCamera(cameraUpdate);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_air, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }

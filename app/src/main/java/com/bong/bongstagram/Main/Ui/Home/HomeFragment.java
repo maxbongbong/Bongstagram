@@ -2,16 +2,12 @@ package com.bong.bongstagram.Main.Ui.Home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,17 +21,12 @@ import com.bong.bongstagram.R;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private HomeAdapter homeAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
-        ((MainActivity) getActivity()).bottomNavi(MainActivity.Type.home);
+        ((MainActivity) getActivity()).bottomNavigation(MainActivity.Type.home);
         ((MainActivity) getActivity()).Toolbar(MainActivity.Type.home);
-        setHasOptionsMenu(true);
 
         return view;
     }
@@ -45,25 +36,14 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Context context = view.getContext();
-        recyclerView = view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        homeAdapter = new HomeAdapter(context, new Movie().getItems());
+        HomeAdapter homeAdapter = new HomeAdapter(context, new Movie().getItems());
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_air, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }

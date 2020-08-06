@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/profile_promotion"
+        android:layout_width="120dp"
+        android:layout_height="37dp"
+        android:layout_gravity="center_vertical|center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical|center"
+        android:stateListAnimator="@null"
+        android:text="@string/title_profile_promotion"
+        android:textColor="@color/overlay_dark_80"
+        android:textSize="15sp"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

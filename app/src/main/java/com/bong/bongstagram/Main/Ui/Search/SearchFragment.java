@@ -36,9 +36,9 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
         Context context = view.getContext();
 
-        ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.search);
+        ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.search);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.search);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
 
         recyclerView = view.findViewById(R.id.recycler_view);
 

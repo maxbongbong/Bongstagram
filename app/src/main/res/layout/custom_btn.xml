@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/custom_btn"
-        android:layout_width="250dp"
-        android:layout_height="35dp"
+        android:layout_width="230dp"
+        android:layout_height="30dp"
         android:backgroundTint="#00ff0000"
         android:stateListAnimator="@null"
-        android:textSize="15dp"
-        android:text="자세히 보기"
+        android:text="@string/title_see"
+        android:autoSizeTextType="uniform"
         android:textColor="@color/overlay_dark_80"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--    true는 눌렸을때 false는 안누른 상태-->
+    <item android:state_pressed="true" android:drawable="@drawable/btn_effect_true" />
+
+    <item android:drawable="@drawable/btn_effect_false" android:state_enabled="true" android:state_window_focused="false" />
+    <item android:drawable="@drawable/btn_effect_false" android:state_enabled="true" />
+    <item android:drawable="@drawable/btn_effect_false" android:state_enabled="false" />
+
+</selector>

@@ -2,6 +2,7 @@ package com.bong.bongstagram.Main.Ui.Splash;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +16,15 @@ import com.bong.bongstagram.Main.Ui.Main.MainActivity;
 import com.bong.bongstagram.R;
 
 public class SplashFragment extends Fragment {
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    Fragment fragment = this;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
-        ((MainActivity)getActivity()).bottomNavi(MainActivity.Type.splash);
+        ((MainActivity)getActivity()).bottomNavigation(MainActivity.Type.splash);
         ((MainActivity)getActivity()).Toolbar(MainActivity.Type.splash);
+
         return view;
     }
 
@@ -33,10 +32,10 @@ public class SplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 1000);
+        hd.postDelayed(new splashHandler(), 1000);
     }
 
-    private class splashhandler implements Runnable{
+    private class splashHandler implements Runnable{
         @Override
         public void run() {
             Fragment homeFragment = new HomeFragment();
