@@ -151,9 +151,55 @@
 
 ## Profile
 
-- ShaerdPreference를 이용한 데이터를 저장 하고 받아오는 Fragment.
+  ### ProfileFragment
 
+- SharedPreference에 저장한 데이터가 있으면 \'getSharedPreferences()\'로 데이터를 보여주는 Fragment.
+- 저장된 데이터가 없을 시 각각의 View들은 Invisible처리가 되고 WebSite 값이 있고 클릭 시, Url연결 가능.
 
+      tv3.setOnClickListener(v -> {
+          connectURL();
+          if (connectURL().resolveActivity(context.getPackageManager()) != null) {
+              startActivity(connectURL());
+          }
+      });
+
+  ### ProfileModifyFragment
+ 
+- SharedPreference를 저장하는 Fragment. 앨범을 사용하기 때문에 2가지의 Permission이 필요하다.
+
+      [android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE]
+
+- Url입력 시 Url형식이 맞는지 확인 후 Url형식이 아닐 경우 저장 불가 동시에 ToastMessage출력.
+      
+      private boolean checkURL(String url) {
+          Pattern p = Patterns.WEB_URL;
+          Matcher m = p.matcher(url.toLowerCase());
+          return m.matches();
+      }
+      
+## LocalFragment
+
+- 자신의 위치를 알수 있는 Fragment. 위치 정보 제공에 동의하지 않을 시, 주소 발견 할 수 없음.
+- GoogleFragment에서 '자세히보기' 클릭시 전환
+
+      Button localDetail = view.findViewById(R.id.custom_btn);
+        localDetail.setOnClickListener(v -> {
+            Log.e("click", "local");
+            Fragment localFragment = new LocalFragment();
+            ((MainActivity) getActivity()).changeFragment(MainActivity.Type.local, localFragment);
+      });
+      
+## Reply
+
+- 게시물에 대해 댓글과 대댓글을 달수 있는 Fragment.
+
+### ReplyFragment
+    
+- RecyclerView를 이용한 댓글을 삭제
+    
+### ReplyAdapter
+
+- 
 
 ## Author
 
