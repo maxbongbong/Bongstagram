@@ -75,8 +75,10 @@
               ((MainActivity)getActivity()).changeFragment(MainActivity.Type.home,      homeFragment);
           }        
       }    
-   ⭐️1. ViewCreated되고 난후에 핸들러(hd)생성. "런어블객체(Runnable)를  delayMillis 후에 실행해라." 라는 메서드 입니다.                           
-    - 위의 코드에서는 1000 을 주었으니 ( 시스템시간/1000 = 현재시간 )1초후( 1000/1000 ) 에 run()이 실행하게 됩니다.                                                             
+   ⭐️1. ViewCreated되고 난후에 핸들러(hd)생성. "런어블객체(Runnable)를  delayMillis 후에 실행해라." 라는 메서드 입니다.
+   
+   - 위의 코드에서는 1000 을 주었으니 ( 시스템시간/1000 = 현재시간 )1초후( 1000/1000 ) 에 run()이 실행하게 됩니다.
+
    ⭐️2. run()이 실행 되면 SplashFragment HomeFragment로 전환됩니다.
 
 ## Author
