@@ -195,12 +195,114 @@
 
 ### ReplyFragment
     
-- RecyclerView를 이용한 댓글을 삭제
+- ReplyAdapter를 implements해서 ReplyAdapterMethod 이용한 RecyclerView 댓글을 삭제
+
+      implements ReplyAdapter.OnItemClickListener
+      
+- 댓글이나 대댓글 레이아웃 클릭시 답글달기, 하트버튼 사용 불가. 댓글이나 대댓글 삭제 혹은 취소 가능.
+
+      @Override
+      public void onLayOutSelected(View v, int position, SparseBooleanArray mSelectedItems,       boolean setEnabled) {
+          replyAdapter.notifyDataSetChanged();
+
+          toggleItemSelected(position, mSelectedItems);
+          countItemsTitle(mSelectedItems);
+          setEnabledBtn(mSelectedItems);
+  
+          ImageView replyToClose = this.getView().findViewById(R.id.reply_Close);
+          replyToClose.setOnClickListener(v1 -> {
+              clearSelectedItems(mSelectedItems);
+              toolbarToggle(mSelectedItems);
+              setEnabledBtn(mSelectedItems);
+          });
+          ImageView trashBtn = this.getView().findViewById(R.id.reply_Trash);
+          trashBtn.setOnClickListener(v1 -> {
+              deleteMethod(mSelectedItems);
+              toolbarToggle(mSelectedItems);
+              setEnabledBtn(mSelectedItems);
+          });
+      }
+
+- ReplyFragment하단에 EditTextView 클릭시 소프트 키보드 보여주는 메소드와 숨기는 메소드.
+      
+      private void showKeyBoard() {
+          if (replyId != null) {
+              String text = "@" + replyId.substring(0, 3) + " ";
+              replyEditText.setText(text);
+              replyEditText.setSelection(replyEditText.length());
+          }
+          InputMethodManager imm = (InputMethodManager)   Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
+          imm.showSoftInput(replyEditText, 0);
+      }
+      
+      private void hideKeyBoard() {
+          InputMethodManager imm = (InputMethodManager)   Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
+          imm.hideSoftInputFromWindow(replyEditText.getWindowToken(), 0);
+      }
     
 ### ReplyAdapter
 
-- 
+- onBindViewHolder에선 View를 항상 그려주고 데이터 적인건 따로 처리 해주는게 좋습니다.
+- 댓글뷰인 VIEW_TYPE_A, 대댓글뷰인 VIEW_TYPE_B로 나누고 댓글 입력 방식에 따라 맞는 뷰를 리턴
 
+      @Override
+      public int getItemViewType(int position) {
+          if (replyLists.get(position).getItemViewType() == 0) {
+              return ReplyFragment.VIEW_TYPE_A;
+          } else {
+              return ReplyFragment.VIEW_TYPE_B;
+          }
+      }
+      
+- 하트 버튼 클릭시 애니메이션과 동시에 하트 채우기(애니메이션리스너)
+
+      private void animationListener(Animation mAnim, ImageView likeBtn, int position) {
+          mAnim.setAnimationListener(new Animation.AnimationListener() {
+              @Override
+              public void onAnimationStart(Animation animation) {}
+  
+              @Override
+              public void onAnimationEnd(Animation animation) {
+                  likeCount(position, likeBtn);
+              }
+
+              @Override
+              public void onAnimationRepeat(Animation animation) {}
+          });
+          likeBtn.startAnimation(mAnim);
+      }
+
+- 댓글이나 대댓글 생성 특정시간을 불러와서 현재시간이랑 비교 후 분,시,일,월,년 계산 해서 스트링 반환하는 예제입니다.
+      
+      private static class TIME_MAXIMUM{
+          static final int SEC = 60;
+          static final int MIN = 60;
+          static final int HOUR = 24;
+          static final int DAY = 30;
+          static final int MONTH = 12;
+      } 
+
+      public static String formatTimeString(long regTime){
+        long curTime = System.currentTimeMillis();
+        long diffTime = (curTime - regTime) / 1000;
+        String msg= null;
+
+      if(diffTime < TIME_MAXIMUM.SEC){
+              msg = "방금 전";
+          } else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
+              msg = diffTime + "분 전";
+          } else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
+              msg = (diffTime) + "시간 전";
+          } else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY) {
+              msg = (diffTime) + "일 전";
+          } else if ((diffTime /= TIME_MAXIMUM.DAY) < TIME_MAXIMUM.MONTH ) {
+              msg = (diffTime) + "달 전";
+          } else {
+              msg = (diffTime) + "년 전";
+          }
+          return  msg;
+      }
+      
 ## Author
 
 👤 **이봉희(BongHee Lee)**
