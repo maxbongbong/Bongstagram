@@ -1,6 +1,7 @@
 # ✨ Bongstagram
 
 이 어플은 개발자의 UI와 기술 향상을 위해 만들어진 예시용 어플입니다.
+사용 된 스킬 : Single Activity + Multiple Fragment, RecyclerView, Glide, GoogleMap, SharedPreference, Sort
 
 ## 🚀 BongStagram Demo App Table of Content
 - [Main](##Main)
