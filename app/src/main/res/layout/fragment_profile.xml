@@ -195,7 +195,7 @@
                     android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
-                    <com.bong.bongstagram.Main.Ui.CustomView.CustomProfileCorrection
+                    <com.bong.bongstagram.Main.Ui.customView.CustomProfileCorrection
                         android:id="@+id/profile_Custom_Correction"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
                         android:clickable="true"
                         android:focusable="true" />
 
-                    <com.bong.bongstagram.Main.Ui.CustomView.CustomProfilePromotion
+                    <com.bong.bongstagram.Main.Ui.customView.CustomProfilePromotion
                         android:id="@+id/profile_Custom_Promotion"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
                         android:clickable="true"
                         android:focusable="true" />
 
-                    <com.bong.bongstagram.Main.Ui.CustomView.CustomProfileInsite
+                    <com.bong.bongstagram.Main.Ui.customView.CustomProfileInsite
                         android:id="@+id/profile_Custom_Insite"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
