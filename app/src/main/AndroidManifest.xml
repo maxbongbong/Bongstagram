@@ -23,7 +23,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBqIiDi6IZgoze0VohGyOHvb4UsoadePT8"/>
-        <activity android:name=".Main.Ui.main.MainActivity"
+        <activity android:name=".Main.ui.main.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:launchMode="singleTop">
             <intent-filter>

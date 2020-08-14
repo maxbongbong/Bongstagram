@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="5dp" />
 
-        <com.bong.bongstagram.Main.Ui.customView.CustomText
+        <com.bong.bongstagram.Main.ui.customView.CustomText
             android:id="@+id/movieName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

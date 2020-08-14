@@ -50,7 +50,7 @@
                         android:gravity="center"
                         android:textColor="@color/grey_text3" />
 
-                    <com.bong.bongstagram.Main.Ui.customView.CustomBtn
+                    <com.bong.bongstagram.Main.ui.customView.CustomBtn
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/local_detail"

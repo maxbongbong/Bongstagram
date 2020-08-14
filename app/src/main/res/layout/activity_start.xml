@@ -16,7 +16,7 @@
         android:gravity="center"
         android:padding="8dp"
         android:layout_height="match_parent"
-        tools:context=".Main.Ui.Start.StartActivity">
+        tools:context=".Main.ui.Start.StartActivity">
 
         <ImageView
             android:id="@+id/logo"
